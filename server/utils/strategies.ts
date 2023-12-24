@@ -1,5 +1,8 @@
 import GoogleStrategy, { VerifyCallback } from "passport-google-oauth2";
 import GitHubStrategy from "passport-github2";
+import LocalStrategy from "passport-local";
+import User from "../models/user";
+import bcrypt from "bcrypt";
 
 const googleStrategy = new GoogleStrategy.Strategy(
   {
@@ -34,4 +37,36 @@ const githubStrategy = new GitHubStrategy.Strategy(
   }
 );
 
-export { googleStrategy, githubStrategy };
+const localStrategy = new LocalStrategy.Strategy(
+  { usernameField: "email", passwordField: "password" },
+  async (
+    email: string,
+    password: string,
+    done: (
+      error: any,
+      user?: false | Express.User | undefined,
+      options?: LocalStrategy.IVerifyOptions | undefined
+    ) => void
+  ) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+      done({ message: "No such user exists" });
+      return;
+    }
+    const passwordsMatched = bcrypt.compareSync(
+      password,
+      user?.password as string
+    );
+    if (passwordsMatched) {
+      done(null, {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      });
+    } else {
+      done({ message: "Invalid password" });
+    }
+  }
+);
+
+export { googleStrategy, githubStrategy, localStrategy };

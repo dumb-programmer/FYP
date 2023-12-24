@@ -1,15 +1,21 @@
 import "dotenv/config";
 
 import express, { Request, Response, NextFunction } from "express";
-import authRouter from "./routes/auth";
+import mongoose from "mongoose";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
 import passport from "passport";
+import rateLimit from "express-rate-limit";
 import session from "express-session";
+import authRouter from "./routes/auth";
 import isAuthenticated from "./middleware/isAuthenticated";
+
+(async () => {
+  await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+})();
 
 const app = express();
 
+app.use(express.json());
 app.use(helmet());
 
 if (process.env.NODE_ENV === "production") {
@@ -46,6 +52,7 @@ app.use((req, res) => {
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
   return res.sendStatus(500);
 });
 
