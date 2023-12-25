@@ -1,8 +1,9 @@
 import GoogleStrategy, { VerifyCallback } from "passport-google-oauth2";
 import GitHubStrategy from "passport-github2";
 import LocalStrategy from "passport-local";
-import User from "../models/user";
+import { Request } from "express";
 import bcrypt from "bcrypt";
+import User from "../models/user";
 
 const googleStrategy = new GoogleStrategy.Strategy(
   {
@@ -12,12 +13,23 @@ const googleStrategy = new GoogleStrategy.Strategy(
     passReqToCallback: true,
   },
   function (
+    req: Request,
     accessToken: string,
     refreshToken: string,
     profile: any,
-    done: VerifyCallback
+    done: VerifyCallback,
   ) {
-    done(null, profile);
+    User.findOne({ email: profile.email }).then((user) => {
+      if (!user) {
+        User.create({
+          email: profile.email,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+        }).then((createdUser) => done(null, createdUser));
+        return;
+      }
+      done(null, user);
+    });
   }
 );
 
@@ -33,7 +45,18 @@ const githubStrategy = new GitHubStrategy.Strategy(
     profile: any,
     done: VerifyCallback
   ) {
-    done(null, profile);
+    User.findOne({ username: profile.username }).then((user) => {
+      if (!user) {
+        const [firstName, lastName] = profile.displayName.split(" ");
+        User.create({
+          username: profile.username,
+          firstName,
+          lastName,
+        }).then((createdUser) => done(null, createdUser));
+        return;
+      }
+      done(null, user);
+    });
   }
 );
 
