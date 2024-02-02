@@ -7,7 +7,9 @@ import passport from "passport";
 import rateLimit from "express-rate-limit";
 import session from "express-session";
 import authRouter from "./routes/auth";
+import chatRouter from "./routes/chat";
 import isAuthenticated from "./middleware/isAuthenticated";
+// import { PDFExtract } from "pdf.js-extract";
 
 (async () => {
   await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
@@ -45,9 +47,34 @@ app.get("/", isAuthenticated, (req, res) => {
   console.log(req.user);
 });
 
-app.use("/", authRouter);
+// app.post("/", (req, res, next) => {
+//   console.log(req.file);
+//   upload(req, res, (err) => {
+//     if (!err) {
+//       if (req.file?.buffer) {
+//         // getDocument({ data: req.file?.buffer });
+//         new PDFExtract().extractBuffer(req.file.buffer, {}, (err, pdf) => {
+//           if (pdf?.pages) {
+//             for (const page of pdf.pages) {
+//               console.log(
+//                 "\n\n-------------------------- PAGE ---------------------------------\n\n"
+//               );
+//               console.log(page.content.map((item) => item.str).join(""));
+//             }
+//           }
+//         });
+//       }
+//       res.json({ message: "File uploaded" });
+//     } else {
+//       res.status(403).json({ message: "File type not supported" });
+//     }
+//   });
+// });
 
-app.use((req, res) => {
+app.use("/", authRouter);
+app.use("/chat", chatRouter);
+
+app.use((req, res, next) => {
   return res.sendStatus(404);
 });
 
