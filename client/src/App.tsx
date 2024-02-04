@@ -3,17 +3,22 @@ import Login from "@/views/Login"
 import Signup from "@/views/Signup"
 import NotFound from "@/views/NotFound"
 import "@/styles/App.css"
+import AuthContextProvider from "./components/AuthContextProvider"
+import Chat from "./views/Chat"
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Chat />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthContextProvider>
   );
 }
 
