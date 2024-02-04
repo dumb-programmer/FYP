@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema } from "@/types/schema";
 import { Link } from "react-router-dom";
+import LoadingIcon from "@/components/LoadingIcon";
 
 export default function Signup() {
-    const { register, handleSubmit, setError, formState: { errors } } = useForm({
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({
         defaultValues: {
             email: "",
             firstName: "",
@@ -57,9 +58,13 @@ export default function Signup() {
                     <input className="input" id="confirmPassword" type="password" {...register("confirmPassword")} />
                     <span className="error-msg">{errors.confirmPassword?.message}</span>
                 </div>
-                <button className="btn btn-primary">Submit</button>
+                <button className="btn btn-primary">
+                    {
+                        isSubmitting ? <LoadingIcon size={25} stroke="white" /> : "Submit"
+                    }
+                </button>
                 <p className="subtle-text">Already have an account? <Link className="link" to="/login">Login</Link></p>
-                <hr className="separator"/>
+                <hr className="separator" />
                 <div className="provider-btns">
                     <a aria-label="signup with google" href="http://localhost:3000/auth/google" className="btn btn-secondary">
                         <img src={googleIcon} style={{ transform: "scale(1.3)" }} alt="google" />

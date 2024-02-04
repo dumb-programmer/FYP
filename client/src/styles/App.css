@@ -20,6 +20,7 @@ h1 {
 .btn {
   cursor: pointer;
   padding: 10px;
+  height: 40px;
   display: flex;
   gap: 1rem;
   justify-content: center;
