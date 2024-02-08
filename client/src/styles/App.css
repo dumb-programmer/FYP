@@ -111,3 +111,41 @@ h1 {
   width: 40px;
   text-align: center;
 }
+
+.home-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+aside {
+  padding: 10px;
+  position: relative;
+  min-width: 150px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+main {
+  position: relative;
+  flex: 1;
+}
+
+.prompt-form-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.prompt-form-container form {
+  display: flex;
+}
+
+.prompt-form-container input{
+  flex: 1;
+}
+
+.user-controls{
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+}
