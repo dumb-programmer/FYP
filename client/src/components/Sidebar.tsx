@@ -1,6 +1,7 @@
 import useAuthContext from "@/hook/useAuthContext";
 import { useQuery } from "react-query"
 import { NavLink, useNavigate } from "react-router-dom";
+import CreateChatButton from "./CreateChatButton";
 
 export default function Sidebar() {
     const { data: chats } = useQuery("chat-links", {
@@ -17,6 +18,7 @@ export default function Sidebar() {
 
     return <aside>
         <h1>Chats</h1>
+        <CreateChatButton />
         <nav>
             <ul>
                 {
