@@ -9,6 +9,7 @@ import session from "express-session";
 import authRouter from "./routes/auth";
 import chatRouter from "./routes/chat";
 import isAuthenticated from "./middleware/isAuthenticated";
+import cors from "cors";
 // import { PDFExtract } from "pdf.js-extract";
 
 (async () => {
@@ -17,6 +18,7 @@ import isAuthenticated from "./middleware/isAuthenticated";
 
 const app = express();
 
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(helmet());
 
@@ -72,7 +74,7 @@ app.get("/", isAuthenticated, (req, res) => {
 // });
 
 app.use("/", authRouter);
-app.use("/chat", chatRouter);
+app.use("/chats", chatRouter);
 
 app.use((req, res, next) => {
   return res.sendStatus(404);

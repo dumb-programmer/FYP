@@ -8,6 +8,7 @@ import {
 import bcrypt from "bcrypt";
 import User from "../models/user";
 import { asyncHandler } from "../utils/asyncHandler";
+import isAuthenticated from "../middleware/isAuthenticated";
 
 passport.use("google", googleStrategy);
 passport.use("github", githubStrategy);
@@ -55,26 +56,47 @@ const signup = asyncHandler(
   }
 );
 
-const login = passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/",
-});
+const login = [
+  passport.authenticate("local"),
+  (req, res) => {
+    return res.sendStatus(200);
+  },
+];
 
 const googleCallback = passport.authenticate("google", {
-  successRedirect: "/",
-  failureRedirect: "/",
+  successRedirect: "http://localhost:5173",
+  failureRedirect: "http://localhost:5173",
 });
 
 const githubCallback = passport.authenticate("github", {
-  successRedirect: "/",
-  failureRedirect: "/",
+  successRedirect: "http://localhost:5173",
+  failureRedirect: "http://localhost:5173",
 });
+
+const getUser = [
+  isAuthenticated,
+  (req, res) => {
+    return res.json(req.user);
+  },
+];
+
+const logout = [
+  isAuthenticated,
+  (req, res, next) => {
+    req.logout((err) => {
+      if (err) return next(err);
+      return res.sendStatus(200);
+    });
+  },
+];
 
 export {
   signup,
   login,
+  logout,
   authenticateWithGoogle,
   googleCallback,
   authenticateWithGithub,
   githubCallback,
+  getUser,
 };

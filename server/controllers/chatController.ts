@@ -13,6 +13,7 @@ import {
 } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { asyncHandler } from "../utils/asyncHandler";
+import isAuthenticated from "../middleware/isAuthenticated";
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -99,3 +100,11 @@ export const query = asyncHandler(async (req, res) => {
   }
   res.end();
 });
+
+export const getChats = [
+  isAuthenticated,
+  asyncHandler(async (req, res) => {
+    const chats = await Chat.find({ userId: req.user._id });
+    res.json(chats);
+  }),
+]
