@@ -4,7 +4,7 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     return next();
   }
-  return res.sendStatus(403);
+  return res.sendStatus(401);
 };
 
 export default isAuthenticated;

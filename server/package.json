@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@huggingface/inference": "^2.6.4",
+    "@langchain/community": "^0.0.26",
     "@xenova/transformers": "^2.14.1",
     "bcrypt": "^5.1.1",
     "cheerio": "^1.0.0-rc.12",
@@ -24,7 +25,7 @@
     "express-session": "^1.17.3",
     "helmet": "^7.1.0",
     "hnswlib-node": "^1.4.2",
-    "langchain": "^0.1.8",
+    "langchain": "^0.1.17",
     "mongoose": "^8.1.1",
     "multer": "^1.4.5-lts.1",
     "passport-github2": "^0.1.12",

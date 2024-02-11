@@ -14,6 +14,7 @@ import {
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { asyncHandler } from "../utils/asyncHandler";
 import isAuthenticated from "../middleware/isAuthenticated";
+import Message from "../models/message";
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -33,14 +34,15 @@ const embeddings = new HuggingFaceInferenceEmbeddings({
   apiKey: process.env.HUGGING_FACE_API_KEY,
 });
 
-const promptTemplate = PromptTemplate.fromTemplate(`Context:
+const promptTemplate = PromptTemplate.fromTemplate(`
+  Context:
   {context}
   
   Prompt:
   {question}
   
   Instruction:
-  Please use the provided context to answer the questions. Ensure that your responses are clear, concise, and contextually relevant. Feel free to provide explanations or additional details when necessary. If the context is empty or does not contains the necessary information to answer the question, say that the context does not have sufficient information to answer the question`);
+  Answer the prompt using the provided context, do not include extra information.`);
 
 const model = new Ollama({
   baseUrl: "http://localhost:11434",
@@ -50,6 +52,7 @@ const model = new Ollama({
 export const createChat = [
   upload,
   asyncHandler(async (req, res) => {
+    const { name } = req.body;
     const loader = new PDFLoader(new Blob([req.file?.buffer]));
     const docs = await loader.load();
 
@@ -63,16 +66,17 @@ export const createChat = [
       numDimensions: 384,
       collectionName,
     });
-    await Chat.create({
-      name: "Test",
+    const chat = await Chat.create({
+      name,
       index: collectionName,
+      userId: req.user._id,
     });
-    return res.sendStatus(200);
+    return res.json(chat);
   }),
 ];
 
 export const query = asyncHandler(async (req, res) => {
-  const { prompt } = req.query;
+  const { prompt } = req.body;
   const { chatId } = req.params;
 
   const chat = await Chat.findById(chatId);
@@ -81,7 +85,7 @@ export const query = asyncHandler(async (req, res) => {
     collectionName: chat?.index as string,
     numDimensions: 384,
   });
-
+  
   const retriever = vectorstore.asRetriever();
 
   const chain = RunnableSequence.from([
@@ -93,11 +97,17 @@ export const query = asyncHandler(async (req, res) => {
     model,
     new StringOutputParser(),
   ]);
+  const result = await chain.invoke(prompt);
+  // for await (const item of result) {
+  //   res.write(item);
+  // }
+  await Message.create({
+    prompt,
+    response: result,
+    chatId,
+    userId: req.user._id,
+  });
 
-  const result = await chain.stream(prompt);
-  for await (const item of result) {
-    res.write(item);
-  }
   res.end();
 });
 
@@ -107,4 +117,4 @@ export const getChats = [
     const chats = await Chat.find({ userId: req.user._id });
     res.json(chats);
   }),
-]
+];

@@ -74,7 +74,7 @@ app.get("/", isAuthenticated, (req, res) => {
 // });
 
 app.use("/", authRouter);
-app.use("/chats", chatRouter);
+app.use("/chats", isAuthenticated, chatRouter);
 
 app.use((req, res, next) => {
   return res.sendStatus(404);
