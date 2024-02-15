@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import CreateChatButton from "./CreateChatButton";
 
 export default function Sidebar() {
-    const { data: chats } = useQuery("chat-links", {
+    const { data: chats, refetch } = useQuery("chat-links", {
         queryFn: async () => {
             const response = await fetch("http://localhost:3000/chats", { mode: "cors", credentials: "include" })
             if (response.ok) {
@@ -22,7 +22,19 @@ export default function Sidebar() {
         <nav>
             <ul>
                 {
-                    chats?.map(chat => <li key={chat._id}><NavLink to={`/${chat._id}`}>{chat.name}</NavLink></li>)
+                    chats?.map(chat => <div key={chat._id}>
+                        <li><NavLink to={`/${chat._id}`}>{chat.name}</NavLink></li>
+                        <button onClick={async () => {
+                            const response = await fetch(`http://localhost:3000/chats/${chat._id}`, {
+                                method: "DELETE",
+                                credentials: "include",
+                                mode: "cors"
+                            });
+                            if (response.ok) {
+                                refetch()
+                            }
+                        }}>Delete</button>
+                    </div>)
                 }
             </ul>
         </nav>
