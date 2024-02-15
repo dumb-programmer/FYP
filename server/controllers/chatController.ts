@@ -13,9 +13,10 @@ import {
 } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { asyncHandler } from "../utils/asyncHandler";
-import isAuthenticated from "../middleware/isAuthenticated";
 import Message from "../models/message";
+import { ChromaClient } from "chromadb";
 
+const chromaClient = new ChromaClient({ path: "http://localhost:8000" });
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
@@ -46,7 +47,7 @@ const promptTemplate = PromptTemplate.fromTemplate(`
 
 const model = new Ollama({
   baseUrl: "http://localhost:11434",
-  model: "Modelfile:latest",
+  model: "mistral",
 });
 
 export const createChat = [
@@ -85,7 +86,7 @@ export const query = asyncHandler(async (req, res) => {
     collectionName: chat?.index as string,
     numDimensions: 384,
   });
-  
+
   const retriever = vectorstore.asRetriever();
 
   const chain = RunnableSequence.from([
@@ -111,10 +112,26 @@ export const query = asyncHandler(async (req, res) => {
   res.end();
 });
 
-export const getChats = [
-  isAuthenticated,
-  asyncHandler(async (req, res) => {
-    const chats = await Chat.find({ userId: req.user._id });
-    res.json(chats);
-  }),
-];
+export const getChats = asyncHandler(async (req, res) => {
+  const chats = await Chat.find({ userId: req.user._id });
+  res.json(chats);
+});
+
+export const deleteChat = asyncHandler(async (req, res) => {
+  const { chatId } = req.params;
+  const chat = await Chat.findById(chatId);
+  if (!chat) {
+    return res.sendStatus(404);
+  }
+  if (chat?.userId !== req.user._id) {
+    return res.sendStatus(403);
+  }
+
+  await Promise.all([
+    Chat.deleteOne({ _id: chatId }),
+    Message.deleteMany({ chatId }),
+    chromaClient.deleteCollection({ name: chat.index as string }),
+  ]);
+
+  return res.sendStatus(200);
+});
