@@ -135,3 +135,18 @@ export const deleteChat = asyncHandler(async (req, res) => {
 
   return res.sendStatus(200);
 });
+
+export const editChat = asyncHandler(async (req, res) => {
+  const { chatId } = req.params;
+  const chat = await Chat.findById(chatId);
+
+  if (chat?.userId !== req.user._id) {
+    return res.sendStatus(403);
+  }
+
+  const { name } = req.body;
+
+  await Chat.updateOne({ _id: chatId }, { name });
+
+  return res.sendStatus(200);
+});
