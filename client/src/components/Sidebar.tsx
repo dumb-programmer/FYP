@@ -2,6 +2,7 @@ import useAuthContext from "@/hook/useAuthContext";
 import { useQuery } from "react-query"
 import { NavLink, useNavigate } from "react-router-dom";
 import CreateChatButton from "./CreateChatButton";
+import ChatLink from "./ChatLink";
 
 export default function Sidebar() {
     const { data: chats, refetch } = useQuery("chat-links", {
@@ -22,19 +23,7 @@ export default function Sidebar() {
         <nav>
             <ul>
                 {
-                    chats?.map(chat => <div key={chat._id}>
-                        <li><NavLink to={`/${chat._id}`}>{chat.name}</NavLink></li>
-                        <button onClick={async () => {
-                            const response = await fetch(`http://localhost:3000/chats/${chat._id}`, {
-                                method: "DELETE",
-                                credentials: "include",
-                                mode: "cors"
-                            });
-                            if (response.ok) {
-                                refetch()
-                            }
-                        }}>Delete</button>
-                    </div>)
+                    chats?.map(chat => <ChatLink key={chat._id} chat={chat} refetch={refetch} />)
                 }
             </ul>
         </nav>
