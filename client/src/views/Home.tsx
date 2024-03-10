@@ -22,9 +22,9 @@ export default function Home() {
     }, [navigate, setAuth]);
 
     if (auth) {
-        return <div className="home-layout">
+        return <div className="h-screen w-screen flex overflow-hidden">
             <Sidebar />
-            <main>
+            <main className="flex-1 overflow-y-auto">
                 <Outlet />
             </main>
         </div>;

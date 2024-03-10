@@ -1,4 +1,3 @@
-import Message from "@/components/Message";
 import MessageList from "@/components/MessageList";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -20,13 +19,13 @@ export default function Chat() {
         }
     })
 
-    return <div>
+    return <div className="flex flex-col h-screen overflow-hidden">
         <h2>{chatId}</h2>
-        <div className="p-10 flex flex-col gap-10">
+        <div className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto">
             <MessageList messages={messages}/>
         </div>
-        <div className="fixed bottom-0 w-screen">
-            <form className="flex" onSubmit={handleSubmit(async (data) => {
+        <div className="flex justify-center p-5 bg-slate-200 w-full">
+            <form className="flex gap-2 w-4/5" onSubmit={handleSubmit(async (data) => {
                 const response = await fetch(`http://localhost:3000/chats/${chatId}`, {
                     method: "POST",
                     mode: "cors",
@@ -37,8 +36,8 @@ export default function Chat() {
                     }
                 });
             })}>
-                <input className="input flex-1" type="text" placeholder="prompt..." {...register("prompt")} />
-                <button>Send</button>
+                <input className="input input-borderd flex-1" type="text" placeholder="Prompt..." {...register("prompt")} />
+                <button className="btn btn-primary">Send</button>
             </form>
         </div>
     </div>;

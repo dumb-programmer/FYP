@@ -22,23 +22,23 @@ export default function CreateChatModal({ dialogRef }: { dialogRef: React.Mutabl
 
     return <Modal dialogRef={dialogRef}>
         <Header>
-            <h1>Create Chat</h1>
+            <h1 className="text-2xl font-bold">Create Chat</h1>
         </Header>
         <Content>
-            <form id={formId} onSubmit={onSubmit}>
+            <form className="flex flex-col gap-4" id={formId} onSubmit={onSubmit}>
                 <div className="form-control">
                     <label htmlFor="name">Name</label>
-                    <input className="input" type="text" {...register("name")} />
+                    <input className="input input-bordered" type="text" {...register("name")} />
                 </div>
                 <div className="form-control">
                     <label htmlFor="document">Document</label>
-                    <input className="input" type="file" {...register("document")} />
+                    <input className="input file-input" type="file" {...register("document")} />
                 </div>
             </form>
         </Content>
         <Action>
-            <button type="button" onClick={() => dialogRef.current?.close()}>Cancel</button>
-            <button type="submit" form={formId}>Create</button>
+            <button className="btn btn-ghost" type="button" onClick={() => dialogRef.current?.close()}>Cancel</button>
+            <button className="btn btn-primary" type="submit" form={formId}>Create</button>
         </Action>
     </Modal>
 }
