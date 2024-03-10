@@ -1,6 +1,6 @@
 import useAuthContext from "@/hook/useAuthContext";
 import { useQuery } from "react-query"
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreateChatButton from "./CreateChatButton";
 import ChatLink from "./ChatLink";
 
@@ -17,19 +17,21 @@ export default function Sidebar() {
     const { auth, setAuth } = useAuthContext();
     const navigate = useNavigate();
 
-    return <aside>
-        <h1>Chats</h1>
-        <CreateChatButton />
-        <nav>
-            <ul>
-                {
-                    chats?.map(chat => <ChatLink key={chat._id} chat={chat} refetch={refetch} />)
-                }
-            </ul>
-        </nav>
-        <div className="user-controls">
+    return <aside className="menu prose relative p-10">
+        <h1 className="text-3xl">Chats</h1>
+        <div className="mt-10 flex flex-col gap-4">
+            <CreateChatButton />
+            <nav>
+                <ul>
+                    {
+                        chats?.map(chat => <ChatLink key={chat._id} chat={chat} refetch={refetch} />)
+                    }
+                </ul>
+            </nav>
+        </div>
+        <div className="absolute bottom-4 flex gap-2 items-center">
             <p>{`${auth.firstName} ${auth.lastName}`}</p>
-            <button onClick={async () => {
+            <button className="btn btn-outline" onClick={async () => {
                 const response = await fetch("http://localhost:3000/logout", { method: "POST", mode: "cors", credentials: "include" });
                 if (response.ok) {
                     setAuth(null);
