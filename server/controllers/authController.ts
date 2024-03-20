@@ -9,6 +9,8 @@ import bcrypt from "bcrypt";
 import User from "../models/user";
 import { asyncHandler } from "../utils/asyncHandler";
 import isAuthenticated from "../middleware/isAuthenticated";
+import validateReq from "../middleware/validateReq";
+import { LoginSchema, SignupSchema } from "../utils/schema";
 
 passport.use("google", googleStrategy);
 passport.use("github", githubStrategy);
@@ -30,9 +32,11 @@ const authenticateWithGithub = passport.authenticate("github", {
   scope: ["user:email"],
 });
 
-const signup = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+const signup = [
+  validateReq(SignupSchema),
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const { email, password, firstName, lastName } = req.body;
+
     const salt = bcrypt.genSaltSync();
     const hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -53,12 +57,13 @@ const signup = asyncHandler(
       }
       next(error);
     }
-  }
-);
+  }),
+];
 
 const login = [
+  validateReq(LoginSchema),
   passport.authenticate("local"),
-  (req, res) => {
+  (req: Request, res: Response) => {
     return res.sendStatus(200);
   },
 ];
@@ -75,14 +80,14 @@ const githubCallback = passport.authenticate("github", {
 
 const getUser = [
   isAuthenticated,
-  (req, res) => {
+  (req: Request, res: Response) => {
     return res.json(req.user);
   },
 ];
 
 const logout = [
   isAuthenticated,
-  (req, res, next) => {
+  (req: Response, res: Response, next: NextFunction) => {
     req.logout((err) => {
       if (err) return next(err);
       return res.sendStatus(200);

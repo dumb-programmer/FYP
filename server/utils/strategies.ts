@@ -17,7 +17,7 @@ const googleStrategy = new GoogleStrategy.Strategy(
     accessToken: string,
     refreshToken: string,
     profile: any,
-    done: VerifyCallback,
+    done: VerifyCallback
   ) {
     User.findOne({ email: profile.email }).then((user) => {
       if (!user) {
@@ -73,7 +73,7 @@ const localStrategy = new LocalStrategy.Strategy(
   ) => {
     const user = await User.findOne({ email });
     if (!user) {
-      done({ message: "No such user exists" });
+      done(null);
       return;
     }
     const passwordsMatched = bcrypt.compareSync(
@@ -87,7 +87,7 @@ const localStrategy = new LocalStrategy.Strategy(
         lastName: user.lastName,
       });
     } else {
-      done({ message: "Invalid password" });
+      done(null);
     }
   }
 );
