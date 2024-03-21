@@ -43,11 +43,6 @@ app.use(
 );
 app.use(passport.session());
 
-app.get("/", isAuthenticated, (req, res) => {
-  res.json({ message: "Hello" });
-  console.log(req.user);
-});
-
 // app.post("/", (req, res, next) => {
 //   console.log(req.file);
 //   upload(req, res, (err) => {

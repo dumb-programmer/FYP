@@ -16,9 +16,15 @@ import { asyncHandler } from "../utils/asyncHandler";
 import Message from "../models/message";
 import { ChromaClient } from "chromadb";
 import validateReq from "../middleware/validateReq";
-import { ChatIDSchema, ChatSchema, QuerySchema } from "../utils/schema";
+import {
+  ChatIDSchema,
+  ChatSchema,
+  PaginatedQuerySchema,
+  QuerySchema,
+} from "../utils/schema";
 import { NextFunction, Request, Response } from "express";
 import validateParams from "../middleware/validateParams";
+import validateQuery from "../middleware/validateQuery";
 
 const chromaClient = new ChromaClient({ path: "http://localhost:8000" });
 const storage = multer.memoryStorage();
@@ -56,7 +62,7 @@ const model = new Ollama({
 
 export const createChat = [
   upload,
-  (err, req, res, next) => {
+  (err: Error, req: Request, res: Response, next: NextFunction) => {
     if (/unsupported file/i.test(err.message)) {
       return res.status(400).json({
         error: { document: "unsupported file format, only PDF is supported" },
@@ -136,10 +142,20 @@ export const query = [
   }),
 ];
 
-export const getChats = asyncHandler(async (req, res) => {
-  const chats = await Chat.find({ userId: req.user._id });
-  res.json(chats);
-});
+const PAGE_LIMIT = 5;
+export const getChats = [
+  validateQuery(PaginatedQuerySchema),
+  asyncHandler(async (req, res) => {
+    const { page = 1 } = req.query;
+    const skip = (+page - 1) * PAGE_LIMIT;
+
+    const chats = await Chat.find({ userId: req?.user?._id })
+      .skip(skip)
+      .limit(PAGE_LIMIT);
+
+    res.json(chats);
+  }),
+];
 
 export const deleteChat = [
   validateParams(ChatIDSchema),

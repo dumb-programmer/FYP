@@ -39,10 +39,26 @@ const ChatIDSchema = z.object({
   ),
 });
 
+const PaginatedQuerySchema = z.object({
+  page: z
+    .string()
+    .refine(
+      (value) => {
+        if (+value > 0) {
+          return true;
+        }
+        return false;
+      },
+      { message: "page must be a number greater than 0" }
+    )
+    .optional(),
+});
+
 export {
   SignupSchema,
   LoginSchema,
   ChatSchema,
   QuerySchema,
   ChatIDSchema,
+  PaginatedQuerySchema,
 };
