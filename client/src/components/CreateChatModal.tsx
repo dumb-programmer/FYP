@@ -3,7 +3,7 @@ import { Action, Content, Header, Modal } from "./modal";
 
 const formId = "create-chat-form";
 export default function CreateChatModal({ dialogRef }: { dialogRef: React.MutableRefObject<HTMLDialogElement | null> }) {
-    const { handleSubmit, register, reset } = useForm({
+    const { handleSubmit, register, reset, formState: { isSubmitting } } = useForm({
         defaultValues: {
             name: "",
             document: ""
@@ -25,20 +25,20 @@ export default function CreateChatModal({ dialogRef }: { dialogRef: React.Mutabl
             <h1 className="text-2xl font-bold">Create Chat</h1>
         </Header>
         <Content>
-            <form className="flex flex-col gap-4" id={formId} onSubmit={onSubmit}>
+            <form className="flex flex-col gap-4 mt-4" id={formId} onSubmit={onSubmit}>
                 <div className="form-control">
                     <label htmlFor="name">Name</label>
                     <input className="input input-bordered" type="text" {...register("name")} />
                 </div>
                 <div className="form-control">
                     <label htmlFor="document">Document</label>
-                    <input className="input file-input" type="file" {...register("document")} />
+                    <input className="input file-input -ml-4 mt-2" type="file" {...register("document")} />
                 </div>
             </form>
         </Content>
         <Action>
             <button className="btn btn-ghost" type="button" onClick={() => dialogRef.current?.close()}>Cancel</button>
-            <button className="btn btn-primary" type="submit" form={formId}>Create</button>
+            <button className={`btn btn-primary${isSubmitting ? " loading loading-spinner" : ""}`} type="submit" form={formId}>Create</button>
         </Action>
     </Modal>
 }

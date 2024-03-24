@@ -1,3 +1,4 @@
+import { updateChat } from "@/api/api";
 import { useState } from "react"
 
 export default function EditChatForm({ chat, refetch, onCancel }) {
@@ -5,15 +6,7 @@ export default function EditChatForm({ chat, refetch, onCancel }) {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:3000/chats/${chat._id}`, {
-            method: "PATCH",
-            body: JSON.stringify({ name }),
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            mode: "cors"
-        });
+        const response = await updateChat(chat._id, name);
         if (response.ok) {
             onCancel();
             refetch();

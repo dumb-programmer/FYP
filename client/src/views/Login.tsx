@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoadingIcon from "@/components/LoadingIcon";
 import AuthProviderBtns from "@/components/AuthProviderBtns";
 import ErrorMessage from "@/components/ErrorMessage";
-import { useState } from "react";
+import { login } from "@/api/api";
 
 export default function Login() {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({
@@ -16,18 +16,11 @@ export default function Login() {
         resolver: zodResolver(LoginSchema)
     });
     const navigate = useNavigate();
-    const [invalidCredentails, setInvalidCredentails] = useState(false);
 
     return <main className="min-h-screen w-screen flex justify-center items-center">
         <div className="card p-10 shadow-md">
             <form className="flex flex-col gap-4 md:min-w-96" onSubmit={handleSubmit(async (data) => {
-                const response = await fetch("http://localhost:3000/login", {
-                    method: "POST", body: JSON.stringify(data), headers: {
-                        "Content-Type": "application/json"
-                    },
-                    mode: "cors",
-                    credentials: "include"
-                })
+                const response = await login(data);
                 if (response.ok) {
                     navigate("/");
                 }

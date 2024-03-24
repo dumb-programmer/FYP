@@ -1,0 +1,73 @@
+export function login(data: { email: string; password: string }) {
+  return fetch("http://localhost:3000/login", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    credentials: "include",
+  });
+}
+
+export function signup(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}) {
+  return fetch("http://localhost:3000/signup", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+  });
+}
+
+export function getMessages(chatId?: string) {
+  return fetch(`http://localhost:3000/chats/${chatId}/messages`, {
+    mode: "cors",
+    credentials: "include",
+  });
+}
+
+export function sendPrompt(data: { prompt: string }, chatId?: string) {
+  return fetch(`http://localhost:3000/chats/${chatId}`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export function getChats() {
+  return fetch("http://localhost:3000/chats", {
+    mode: "cors",
+    credentials: "include",
+  });
+}
+
+export function updateChat(chatId: string, name: string) {
+  return fetch(`http://localhost:3000/chats/${chatId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ name }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
+export function deleteChat(chatId: string) {
+  return fetch(`http://localhost:3000/chats/${chatId}`, {
+    method: "DELETE",
+    credentials: "include",
+    mode: "cors",
+  });
+}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import LoadingIcon from "@/components/LoadingIcon";
 import AuthProviderBtns from "@/components/AuthProviderBtns";
 import ErrorMessage from "@/components/ErrorMessage";
+import { signup } from "@/api/api";
 
 export default function Signup() {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({
@@ -21,11 +22,7 @@ export default function Signup() {
     return <main className="min-h-screen flex justify-center items-center">
         <div className="card shadow-md">
             <form className="flex flex-col gap-4 p-10" onSubmit={handleSubmit(async (data) => {
-                const response = await fetch("http://localhost:3000/signup", {
-                    method: "POST", body: JSON.stringify({ ...data, confirmPassword: undefined }), headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
+                const response = await signup(data);
                 if (response.status === 409) {
                     setError("email", { message: "A user with this email already exists" })
                 }
