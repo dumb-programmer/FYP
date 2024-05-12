@@ -45,8 +45,8 @@ export function sendPrompt(data: { prompt: string }, chatId?: string) {
   });
 }
 
-export function getChats() {
-  return fetch("http://localhost:3000/chats", {
+export function getChats(page: number) {
+  return fetch(`http://localhost:3000/chats?page=${page}`, {
     mode: "cors",
     credentials: "include",
   });
