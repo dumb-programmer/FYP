@@ -1,15 +1,15 @@
 import { Action, Content, Header, Modal } from "./modal";
 
-export default function ConfirmationModal({ dialogRef, onDelete }: { dialogRef: React.MutableRefObject<HTMLDialogElement | null>, onDelete: () => void }) {
+export default function DeleteConfirmationModal({ dialogRef, title, description, onDelete }: { dialogRef: React.MutableRefObject<HTMLDialogElement | null>, title: string, description: string, onDelete: () => void }) {
     return <Modal dialogRef={dialogRef}>
         <Header>
             <h1 className="text-xl font-bold">
-                Delete Chat
+                {title}
             </h1>
         </Header>
         <Content>
             <p className="mt-4">
-                Are you sure you want to delete this chat? This action is non-recoverable
+                {description}
             </p>
         </Content>
         <Action>

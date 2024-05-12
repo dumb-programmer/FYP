@@ -26,8 +26,16 @@ export function signup(data: {
   });
 }
 
-export function getMessages(chatId?: string, page: number) {
+export function getMessages(chatId: string, page: number) {
   return fetch(`http://localhost:3000/chats/${chatId}/messages?page=${page}`, {
+    mode: "cors",
+    credentials: "include",
+  });
+}
+
+export function deleteMessage(chatId: string, messageId: string) {
+  return fetch(`http://localhost:3000/chats/${chatId}/messages/${messageId}`, {
+    method: "DELETE",
     mode: "cors",
     credentials: "include",
   });

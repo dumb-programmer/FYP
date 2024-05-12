@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import EditChatForm from "./EditChatForm";
 import { EllipsisHorizontalIcon, PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
-import ConfirmationModal from "./ConfirmationModal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import { deleteChat } from "@/api/api";
 
 export default function ChatLink({ chat, refetch }) {
@@ -55,7 +55,7 @@ export default function ChatLink({ chat, refetch }) {
             </ul>
         </div>
         <div className="flex gap-2">
-            <ConfirmationModal dialogRef={deleteChatModalRef} onDelete={async () => {
+            <DeleteConfirmationModal title="Delete Chat" description="Are you sure you want to delete this chat? This action is non-recoverable" dialogRef={deleteChatModalRef} onDelete={async () => {
                 const response = await deleteChat(chat._id);
                 if (response.ok) {
                     refetch()

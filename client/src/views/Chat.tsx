@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 export default function Chat() {
     const { chatId } = useParams();
-    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteQuery(`chat-${chatId}`, {
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfiniteQuery(`chat-${chatId}`, {
         queryFn: async ({ pageParam = 1 }) => {
             const response = await getMessages(chatId, pageParam);
             if (response.ok) {
@@ -46,7 +46,7 @@ export default function Chat() {
         <div ref={containerRef} className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto">
             <div ref={ref}></div>
             {
-                data?.pages && <MessageList messages={[].concat(...data.pages.map(page => [...page.messages].reverse()).reverse())} />
+                data?.pages && <MessageList refetchMessages={refetch} messages={[].concat(...data.pages.map(page => [...page.messages].reverse()).reverse())} />
             }
         </div>
         <div className="flex justify-center p-5 bg-base-100 w-full">
