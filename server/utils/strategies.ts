@@ -82,6 +82,7 @@ const localStrategy = new LocalStrategy.Strategy(
     );
     if (passwordsMatched) {
       done(null, {
+        _id: user._id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,

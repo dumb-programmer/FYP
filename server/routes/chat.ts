@@ -6,7 +6,7 @@ import {
   getChats,
   query,
 } from "../controllers/chatController";
-import { getMessages } from "../controllers/messageController";
+import { deleteMessage, getMessages } from "../controllers/messageController";
 
 const router = express.Router();
 
@@ -15,6 +15,8 @@ router.post("/", createChat);
 router.post("/:chatId", query);
 router.delete("/:chatId", deleteChat);
 router.patch("/:chatId", editChat);
+
 router.get("/:chatId/messages", getMessages);
+router.delete("/:chatId/messages/:messageId", deleteMessage);
 
 export default router;

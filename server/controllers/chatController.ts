@@ -149,11 +149,16 @@ export const getChats = [
     const { page = 1 } = req.query;
     const skip = (+page - 1) * PAGE_LIMIT;
 
-    const chats = await Chat.find({ userId: req?.user?._id })
+    const chats = await Chat.find({ userId: req.user._id })
+      .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(PAGE_LIMIT);
+      .limit(PAGE_LIMIT + 1);
 
-    res.json(chats);
+    res.json({
+      chats: chats.slice(0, PAGE_LIMIT),
+      nextPage: +page + 1,
+      hasMore: chats.length > PAGE_LIMIT,
+    });
   }),
 ];
 
