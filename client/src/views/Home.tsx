@@ -1,12 +1,12 @@
-import Chat from "@/views/Chat";
 import Sidebar from "@/components/Sidebar";
 import useAuthContext from "@/hook/useAuthContext";
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Home() {
     const { auth, setAuth } = useAuthContext();
     const navigate = useNavigate();
+    const { pathname, search } = useLocation();
 
     useEffect(() => {
         fetch("http://localhost:3000/user", { credentials: "include", mode: "cors" }).then(response => {
@@ -16,10 +16,17 @@ export default function Home() {
                 })
             }
             else {
-                navigate("/login");
+                if (pathname !== "/") {
+                    const searchParams = new URLSearchParams();
+                    searchParams.set("redirect", pathname + search)
+                    navigate(`/login?${searchParams.toString()}`)
+                }
+                else {
+                    navigate("/login")
+                }
             }
         });
-    }, [navigate, setAuth]);
+    }, [navigate, setAuth, pathname, search]);
 
     if (auth) {
         return <div className="h-screen w-screen flex overflow-hidden">

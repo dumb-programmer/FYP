@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/types/schema";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import LoadingIcon from "@/components/LoadingIcon";
 import AuthProviderBtns from "@/components/AuthProviderBtns";
 import ErrorMessage from "@/components/ErrorMessage";
@@ -16,13 +16,16 @@ export default function Login() {
         resolver: zodResolver(LoginSchema)
     });
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    const redirect = searchParams.get("redirect");
 
     return <main className="min-h-screen w-screen flex justify-center items-center">
         <div className="card p-10 shadow-md">
             <form className="flex flex-col gap-4 md:min-w-96" onSubmit={handleSubmit(async (data) => {
                 const response = await login(data);
                 if (response.ok) {
-                    navigate("/");
+                    navigate(redirect || "/");
                 }
                 else {
                     setError("root", {
