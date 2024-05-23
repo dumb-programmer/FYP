@@ -101,6 +101,19 @@ export const createChat = [
   }),
 ];
 
+export const getChatName = [
+  validateParams(ChatIDSchema),
+  asyncHandler(async (req, res) => {
+    const { chatId } = req.params;
+    const chat = await Chat.findOne(
+      { _id: chatId, userId: req.user._id },
+      { name: 1, _id: 0 }
+    );
+
+    return res.json(chat);
+  }),
+];
+
 export const query = [
   validateParams(ChatIDSchema),
   validateReq(QuerySchema),
