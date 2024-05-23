@@ -10,6 +10,8 @@ const MessageSchema = new Schema(
   { timestamps: true }
 );
 
+MessageSchema.index({ response: "text", prompt: "text" });
+
 const Message = mongoose.model("message", MessageSchema);
 
 export default Message;

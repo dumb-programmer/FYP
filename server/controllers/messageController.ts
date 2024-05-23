@@ -11,11 +11,15 @@ export const getMessages = [
   validateQuery(PaginatedQuerySchema),
   asyncHandler(async (req, res) => {
     const { chatId } = req.params;
-    const { page = 1 } = req.query;
+    const { page = 1, query } = req.query;
 
     const skip = (+page - 1) * PAGE_LIMIT;
 
-    const messages = await Message.find({ chatId })
+    const searchDoc = query
+      ? { chatId, $text: { $search: query } }
+      : { chatId };
+
+    const messages = await Message.find(searchDoc)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(PAGE_LIMIT + 1);
