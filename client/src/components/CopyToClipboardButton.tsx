@@ -1,7 +1,7 @@
 import { ClipboardDocumentIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/16/solid"
 import { useEffect, useState } from "react"
 
-export default function CopyToClipboard({ data }) {
+export default function CopyToClipboard({ data }: { data: string }) {
     const [copied, setCopied] = useState(false);
 
 

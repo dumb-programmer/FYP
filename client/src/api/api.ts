@@ -33,6 +33,16 @@ export function getMessages(chatId: string, page: number) {
   });
 }
 
+export function searchMessages(chatId: string, query: string, page: number) {
+  return fetch(
+    `http://localhost:3000/chats/${chatId}/messages?query=${query}&page=${page}`,
+    {
+      mode: "cors",
+      credentials: "include",
+    }
+  );
+}
+
 export function deleteMessage(chatId: string, messageId: string) {
   return fetch(`http://localhost:3000/chats/${chatId}/messages/${messageId}`, {
     method: "DELETE",
