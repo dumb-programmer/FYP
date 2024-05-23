@@ -70,6 +70,13 @@ export function getChats(page: number) {
   });
 }
 
+export function getChatName(chatId: string) {
+  return fetch(`http://localhost:3000/chats/${chatId}/name`, {
+    mode: "cors",
+    credentials: "include",
+  });
+}
+
 export function updateChat(chatId: string, name: string) {
   return fetch(`http://localhost:3000/chats/${chatId}`, {
     method: "PATCH",
