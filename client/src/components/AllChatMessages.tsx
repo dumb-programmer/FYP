@@ -4,12 +4,13 @@ import useIntersectionObserver from "@/hook/useIntersectionObserver";
 import { useParams } from "react-router-dom";
 import { getMessages } from "@/api/api";
 import { useInfiniteQuery } from "react-query";
+import StreamedMessage from "./StreamedMessage";
 
 export default function AllChatMessages() {
     const { chatId } = useParams();
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfiniteQuery(`chat-${chatId}`, {
         queryFn: async ({ pageParam = 1 }) => {
-            const response = await getMessages(chatId, pageParam);
+            const response = await getMessages(chatId as string, pageParam);
             if (response.ok) {
                 return await response.json();
             }
@@ -22,7 +23,6 @@ export default function AllChatMessages() {
         }
     });
     const containerRef = useRef<HTMLDivElement>(null);
-
     const { inView, ref } = useIntersectionObserver();
 
     useEffect(() => {
@@ -41,6 +41,7 @@ export default function AllChatMessages() {
             {
                 data?.pages && <MessageList refetchMessages={refetch} messages={[].concat(...data.pages.map(page => [...page.messages].reverse()).reverse())} />
             }
+            <StreamedMessage chatId={chatId as string} />
         </div>
     )
 }
