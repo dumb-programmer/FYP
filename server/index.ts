@@ -10,6 +10,7 @@ import authRouter from "./routes/auth";
 import chatRouter from "./routes/chat";
 import isAuthenticated from "./middleware/isAuthenticated";
 import cors from "cors";
+import { io } from "./socket";
 // import { PDFExtract } from "pdf.js-extract";
 
 (async () => {
@@ -82,3 +83,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);
 });
+
+io.listen(3001);

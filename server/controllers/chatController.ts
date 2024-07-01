@@ -25,6 +25,7 @@ import {
 import { NextFunction, Request, Response } from "express";
 import validateParams from "../middleware/validateParams";
 import validateQuery from "../middleware/validateQuery";
+import { io } from "../socket";
 
 const chromaClient = new ChromaClient({ path: "http://localhost:8000" });
 const storage = multer.memoryStorage();
@@ -89,8 +90,8 @@ export const createChat = [
     const splitDocuments = await splitter.splitDocuments(docs);
     const collectionName = crypto.randomUUID();
     await Chroma.fromDocuments(splitDocuments, embeddings, {
-      numDimensions: 384,
       collectionName,
+      numDimensions: 384,
     });
     const chat = await Chat.create({
       name,
@@ -109,7 +110,6 @@ export const getChatName = [
       { _id: chatId, userId: req.user._id },
       { name: 1, _id: 0 }
     );
-
     return res.json(chat);
   }),
 ];
@@ -139,19 +139,31 @@ export const query = [
       model,
       new StringOutputParser(),
     ]);
-    const result = await chain.stream(prompt);
-    let response = "";
-    for await (const item of result) {
-      res.write(item);
-      response += item;
+    const stream = await chain.stream(prompt);
+    res.sendStatus(200);
+
+    let first = true;
+    let messageId = null;
+    for await (const word of stream) {
+      io.emit("message", { prompt, word, more: true });
+      if (first) {
+        io.emit("message-start");
+        messageId = (
+          await Message.create({
+            prompt,
+            response: word,
+            chatId,
+            userId: req.user._id,
+          })
+        )._id;
+        first = false;
+      } else {
+        await Message.updateOne({ _id: messageId }, [
+          { $set: { response: { $concat: ["$response", word] } } },
+        ]);
+      }
     }
-    res.end();
-    await Message.create({
-      prompt,
-      response: response,
-      chatId,
-      userId: req.user._id,
-    });
+    io.emit("message", { more: false });
   }),
 ];
 
