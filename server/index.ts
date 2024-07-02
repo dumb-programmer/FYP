@@ -5,12 +5,12 @@ import mongoose from "mongoose";
 import helmet from "helmet";
 import passport from "passport";
 import rateLimit from "express-rate-limit";
-import session from "express-session";
 import authRouter from "./routes/auth";
 import chatRouter from "./routes/chat";
 import isAuthenticated from "./middleware/isAuthenticated";
 import cors from "cors";
 import { io } from "./socket";
+import sessionMiddleware from "./middleware/sessionMiddleware";
 // import { PDFExtract } from "pdf.js-extract";
 
 (async () => {
@@ -34,14 +34,8 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-app.use(
-  session({
-    secret: "cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === "production" },
-  })
-);
+app.use(sessionMiddleware);
+app.use(passport.initialize());
 app.use(passport.session());
 
 // app.post("/", (req, res, next) => {

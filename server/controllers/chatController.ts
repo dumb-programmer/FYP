@@ -25,7 +25,7 @@ import {
 import { NextFunction, Request, Response } from "express";
 import validateParams from "../middleware/validateParams";
 import validateQuery from "../middleware/validateQuery";
-import { io } from "../socket";
+import { getSocketFromUserId, io } from "../socket";
 
 const chromaClient = new ChromaClient({ path: "http://localhost:8000" });
 const storage = multer.memoryStorage();
@@ -142,28 +142,40 @@ export const query = [
     const stream = await chain.stream(prompt);
     res.sendStatus(200);
 
+    const socket = getSocketFromUserId(chat?.userId?.toString() as string);
+
+    let stop = false;
+    socket.on(`${chatId}-stop`, async () => {
+      stop = true;
+    });
+
     let first = true;
     let messageId = null;
-    for await (const word of stream) {
-      io.emit("message", { prompt, word, more: true });
-      if (first) {
-        io.emit("message-start");
-        messageId = (
-          await Message.create({
-            prompt,
-            response: word,
-            chatId,
-            userId: req.user._id,
-          })
-        )._id;
-        first = false;
-      } else {
-        await Message.updateOne({ _id: messageId }, [
-          { $set: { response: { $concat: ["$response", word] } } },
-        ]);
+    try {
+      for await (const word of stream) {
+        if (stop) break;
+        socket.emit("message", { prompt, word, more: true });
+        if (first) {
+          socket.emit("message-start");
+          messageId = (
+            await Message.create({
+              prompt,
+              response: word,
+              chatId,
+              userId: req.user._id,
+            })
+          )._id;
+          first = false;
+        } else {
+          await Message.updateOne({ _id: messageId }, [
+            { $set: { response: { $concat: ["$response", word] } } },
+          ]);
+        }
       }
+    } finally {
+      socket.emit("message", { more: false });
+      socket.emit("message-stop");
     }
-    io.emit("message", { more: false });
   }),
 ];
 
