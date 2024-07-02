@@ -1,5 +1,7 @@
 import { sendPrompt } from "@/api/api";
-import { PaperAirplaneIcon } from "@heroicons/react/16/solid";
+import useSocketContext from "@/hook/useSocketContext";
+import { PaperAirplaneIcon, StopIcon } from "@heroicons/react/16/solid";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
@@ -11,13 +13,35 @@ export default function PromptForm() {
     });
 
     const { chatId } = useParams();
+    const socket = useSocketContext();
+    const [isCancelable, setIsCancelable] = useState(false)
+
+    useEffect(() => {
+        const onMessageStart = () => setIsCancelable(true);
+        const onMessageStop = () => setIsCancelable(false);
+
+        socket.on("message-start", onMessageStart);
+        socket.on("message-stop", onMessageStop);
+
+        return () => {
+            socket.off("message-start", onMessageStart);
+            socket.off("message-stop", onMessageStop);
+        }
+    }, [socket]);
 
     return (
-        <form className="flex gap-2 w-4/5" onSubmit={handleSubmit(async (data) => {
+        <form className="flex gap-2 w-4/5" onSubmit={!isCancelable ? handleSubmit(async (data) => {
             await sendPrompt(data, chatId);
-        })}>
+        }) : (e) => {
+            e.preventDefault();
+            socket.emit(`${chatId}-stop`);
+        }}>
             <input className="input input-bordered flex-1" type="text" placeholder="Prompt..." {...register("prompt")} />
-            <button aria-label="send" className={`btn btn-primary ${isSubmitting ? "loading loading-spinner" : ""}`}><PaperAirplaneIcon height={20} width={20} /></button>
+            <button aria-label="send" className={`btn btn-primary ${isSubmitting ? "loading loading-spinner" : ""}`}>
+                {
+                    !isCancelable ? <PaperAirplaneIcon height={20} width={20} /> : <StopIcon height={20} width={20} />
+                }
+            </button>
         </form>
     )
 }

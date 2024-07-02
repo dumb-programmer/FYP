@@ -33,5 +33,5 @@ export default function StreamedMessage({ chatId }: StreamedMessageProps) {
         }
     }, [socket, chatId, query]);
 
-    return response && <Message message={{ _id: crypto.randomUUID(), prompt, response, createdAt: Date.now() }} />;
+    return response && <Message message={{ _id: crypto.randomUUID(), prompt, response, createdAt: Date.now() }} cursor />;
 }

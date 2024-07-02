@@ -1,4 +1,5 @@
 import Sidebar from "@/components/Sidebar";
+import SocketContextProvider from "@/components/SocketContextProvider";
 import useAuthContext from "@/hook/useAuthContext";
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -32,7 +33,9 @@ export default function Home() {
         return <div className="h-screen w-screen flex overflow-hidden">
             <Sidebar />
             <main className="flex-1 overflow-y-auto">
-                <Outlet />
+                <SocketContextProvider>
+                    <Outlet />
+                </SocketContextProvider>
             </main>
         </div>;
     }
