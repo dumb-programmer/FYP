@@ -2,12 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "@/views/Login"
 import Signup from "@/views/Signup"
 import NotFound from "@/views/NotFound"
-import "@/styles/App.css"
 import AuthContextProvider from "./components/AuthContextProvider"
 import Home from "./views/Home"
 import { QueryClientProvider, QueryClient } from "react-query"
 import Chat from "./views/Chat"
 import WelcomeScreen from "./views/WelcomeScreen"
+import "@/styles/App.css"
 
 const client = new QueryClient();
 function App() {

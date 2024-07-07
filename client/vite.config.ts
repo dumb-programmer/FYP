@@ -10,4 +10,8 @@ export default defineConfig({
       "@components": "/src/components",
     },
   },
+  test: {
+    globals: true,
+    environment: "jsdom",
+  },
 });
