@@ -31,7 +31,7 @@ describe("CopyToClipboardButton", () => {
 
         const button = screen.getByTitle(/copy-to-clipboard/);
 
-        expect(button).not.toBeNull();
+        expect(button).toMatchSnapshot();
     });
 
     it("data is copied to clipboard on click", async () => {
@@ -49,8 +49,8 @@ describe("CopyToClipboardButton", () => {
 
         fireEvent.click(button);
 
-        expect(setTimeout).toHaveBeenCalled();
-        expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 1000);
+        expect(setTimeoutSpy).toHaveBeenCalled();
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 1000);
     });
 
     it("timer is cleared on unmount", async () => {

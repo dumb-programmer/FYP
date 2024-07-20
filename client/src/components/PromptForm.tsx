@@ -30,13 +30,13 @@ export default function PromptForm() {
     }, [socket]);
 
     return (
-        <form className="flex gap-2 w-4/5" onSubmit={!isCancelable ? handleSubmit(async (data) => {
+        <form data-testid="prompt-form" className="flex gap-2 w-4/5" onSubmit={!isCancelable ? handleSubmit(async (data) => {
             await sendPrompt(data, chatId);
         }) : (e) => {
             e.preventDefault();
             socket.emit(`${chatId}-stop`);
         }}>
-            <input className="input input-bordered flex-1" type="text" placeholder="Prompt..." {...register("prompt")} />
+            <input className="input input-bordered flex-1" type="text" placeholder="Prompt..." {...register("prompt")} required />
             <button aria-label="send" className={`btn btn-primary ${isSubmitting ? "loading loading-spinner" : ""}`}>
                 {
                     !isCancelable ? <PaperAirplaneIcon height={20} width={20} /> : <StopIcon height={20} width={20} />

@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WelcomeScreen > renders correctly 1`] = `
+<div
+  class="h-full w-full flex flex-col gap-4 items-center justify-center"
+  data-testid="welcome-screen"
+>
+  <h1
+    class="text-5xl font-bold"
+  >
+    Welcome
+  </h1>
+  <p
+    class="text-gray-500"
+  >
+    Click on create chat or on existing chat to start chatting
+  </p>
+</div>
+`;

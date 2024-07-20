@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Searchbar > renders correctly 1`] = `
+<div
+  class="relative"
+  data-testid="searchbar"
+>
+  <svg
+    aria-hidden="true"
+    class="absolute mt-[13px] ml-3"
+    color="#696969"
+    data-slot="icon"
+    fill="currentColor"
+    height="20"
+    viewBox="0 0 16 16"
+    width="20"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      clip-rule="evenodd"
+      d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+      fill-rule="evenodd"
+    />
+  </svg>
+  <input
+    class="input input-bordered w-full pl-10"
+    placeholder="Search..."
+    value=""
+  />
+</div>
+`;

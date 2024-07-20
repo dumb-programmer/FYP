@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorMessage > renders correctly 1`] = `
+<span
+  class="text-sm text-red-600"
+>
+  something went wrong
+</span>
+`;

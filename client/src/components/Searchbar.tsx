@@ -9,7 +9,7 @@ export default function Searchbar() {
     const query = searchParams.get("query");
 
     return (
-        <div className="relative">
+        <div className="relative" data-testid="searchbar">
             <MagnifyingGlassIcon className="absolute mt-[13px] ml-3" height={20} width={20} color="#696969" />
             <input className="input input-bordered w-full pl-10" placeholder="Search..." defaultValue={query || ""} onChange={(e) => {
                 const searchParams = new URLSearchParams()

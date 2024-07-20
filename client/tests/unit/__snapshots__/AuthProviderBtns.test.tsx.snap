@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AuthProviderBtns > renders correctly 1`] = `
+<div
+  class="flex flex-col gap-4"
+  data-testid="auth-provider-btns"
+>
+  <a
+    class="btn glass flex items-center gap-4"
+    href="http://localhost:3000/auth/google"
+  >
+    <img
+      alt="google"
+      src="/src/assets/google-icon.svg"
+      style="transform: scale(1.3);"
+    />
+    Continue With Google
+  </a>
+  <a
+    class="btn glass flex items-center gap-4"
+    href="http://localhost:3000/auth/github"
+  >
+    <img
+      alt="github"
+      src="/src/assets/github-icon.svg"
+      style="transform: scale(1.8);"
+    />
+    Continue With Github
+  </a>
+</div>
+`;
