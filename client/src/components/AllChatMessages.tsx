@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
 import MessageList from "./MessageList";
-import useIntersectionObserver from "@/hook/useIntersectionObserver";
 import { useParams } from "react-router-dom";
 import { getMessages } from "@/api/api";
 import { useInfiniteQuery } from "react-query";
 import StreamedMessage from "./StreamedMessage";
+import InfiniteScrollContainer from "./InfiniteScrollContainer";
 
 export default function AllChatMessages() {
     const { chatId } = useParams();
@@ -22,26 +21,14 @@ export default function AllChatMessages() {
             return undefined
         }
     });
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { inView, ref } = useIntersectionObserver();
 
-    useEffect(() => {
-        if (inView && !isFetchingNextPage && hasNextPage) {
-            fetchNextPage();
-            containerRef?.current?.scrollBy({
-                top: 20,
-                behavior: "smooth",
-            });
-        }
-    }, [inView]);
 
     return (
-        <div ref={containerRef} className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto">
-            <div ref={ref}></div>
+        <InfiniteScrollContainer className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto" hasNextPage={hasNextPage} isFetchingNextPage={isFetchingNextPage} fetchNextPage={fetchNextPage}>
             {
                 data?.pages && <MessageList refetchMessages={refetch} messages={[].concat(...data.pages.map(page => [...page.messages].reverse()).reverse())} />
             }
             <StreamedMessage chatId={chatId as string} />
-        </div>
+        </InfiniteScrollContainer>
     )
 }
