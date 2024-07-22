@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`EditChatForm > renders correctly 1`] = `
+exports[`LoadingIcon > renders correctly 1`] = `
 <svg
   data-testid="loading-icon"
   height="20"

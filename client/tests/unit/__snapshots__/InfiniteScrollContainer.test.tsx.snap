@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InfiniteScrollContainer > renders correctly 1`] = `
+<div>
+  <div>
+    <div />
+    <div
+      class="w-96"
+    />
+  </div>
+</div>
+`;

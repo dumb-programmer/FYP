@@ -5,7 +5,7 @@ import LoadingIcon from "../../src/components/LoadingIcon";
 
 const renderComponent = () => render(<LoadingIcon size={20} />);
 
-describe("EditChatForm", () => {
+describe("LoadingIcon", () => {
     it("renders correctly", () => {
         renderComponent();
 

@@ -18,7 +18,7 @@ const mockSocket = {
     off: vi.fn(),
 }
 
-vi.mock("../../src/hook/useSocketContext", () => ({
+vi.mock("../../src/hooks/useSocketContext", () => ({
     default: () => mockSocket
 }));
 
