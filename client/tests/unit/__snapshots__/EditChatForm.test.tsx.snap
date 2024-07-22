@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EditChatForm > renders correctly 1`] = `
+<form
+  class="flex flex-col gap-2"
+  data-testid="edit-chat-form"
+>
+  <input
+    class="input input-bordered"
+    type="text"
+    value="test"
+  />
+  <div
+    class="flex justify-end gap-2"
+  >
+    <button
+      class="btn btn-sm text-xs"
+      type="button"
+    >
+      Cancel
+    </button>
+    <button
+      class="btn btn-primary btn-sm text-xs"
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+`;

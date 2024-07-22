@@ -6,8 +6,8 @@ import PromptForm from "../../src/components/PromptForm";
 import { sendPrompt } from "../../src/api/api";
 import { useParams } from "react-router-dom";
 
-vi.mock("react-router-dom", () => ({
-    ...vi.importActual("react-router-dom"),
+vi.mock("react-router-dom", async () => ({
+    ...await vi.importActual("react-router-dom"),
     useParams: vi.fn().mockReturnValue({
         chatId: crypto.randomUUID()
     }),

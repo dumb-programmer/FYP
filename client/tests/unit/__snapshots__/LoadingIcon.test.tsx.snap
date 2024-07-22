@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EditChatForm > renders correctly 1`] = `
+<svg
+  data-testid="loading-icon"
+  height="20"
+  preserveAspectRatio="xMidYMid"
+  viewBox="0 0 100 100"
+  width="20"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle
+    cx="50"
+    cy="50"
+    fill="none"
+    r="35"
+    stroke="#fff"
+    stroke-dasharray="164.93361431346415 56.97787143782138"
+    stroke-width="10"
+  >
+    <animatetransform
+      attributeName="transform"
+      dur="1s"
+      keyTimes="0;1"
+      repeatCount="indefinite"
+      type="rotate"
+      values="0 50 50;360 50 50"
+    />
+  </circle>
+</svg>
+`;
