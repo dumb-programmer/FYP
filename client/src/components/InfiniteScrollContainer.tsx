@@ -1,4 +1,4 @@
-import useIntersectionObserver from "@/hook/useIntersectionObserver";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { useEffect, useRef } from "react";
 
 interface InfiniteScrollContainerProps extends React.HTMLProps<HTMLDivElement> {

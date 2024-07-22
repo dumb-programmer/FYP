@@ -1,5 +1,5 @@
 import { sendPrompt } from "@/api/api";
-import useSocketContext from "@/hook/useSocketContext";
+import useSocketContext from "@/hooks/useSocketContext";
 import { PaperAirplaneIcon, StopIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

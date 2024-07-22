@@ -1,4 +1,4 @@
-import useSocketContext from "@/hook/useSocketContext";
+import useSocketContext from "@/hooks/useSocketContext";
 import Message from "./Message";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
@@ -33,5 +33,5 @@ export default function StreamedMessage({ chatId }: StreamedMessageProps) {
         }
     }, [socket, chatId, query]);
 
-    return response && <Message message={{ _id: crypto.randomUUID(), prompt, response, createdAt: Date.now() }} cursor />;
+    return response && <Message message={{ _id: crypto.randomUUID(), prompt, response }} cursor />;
 }

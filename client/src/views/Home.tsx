@@ -1,6 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import SocketContextProvider from "@/components/SocketContextProvider";
-import useAuthContext from "@/hook/useAuthContext";
+import useAuthContext from "@/hooks/useAuthContext";
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 

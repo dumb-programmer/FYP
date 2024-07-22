@@ -1,4 +1,4 @@
-import useAuthContext from "@/hook/useAuthContext";
+import useAuthContext from "@/hooks/useAuthContext";
 import { useInfiniteQuery } from "react-query"
 import { useNavigate } from "react-router-dom";
 import CreateChatButton from "./CreateChatButton";
