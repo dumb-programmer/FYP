@@ -63,6 +63,15 @@ export function sendPrompt(data: { prompt: string }, chatId?: string) {
   });
 }
 
+export function createChat(formData: any) {
+  return fetch("http://localhost:3000/chats", {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
 export function getChats(page: number) {
   return fetch(`http://localhost:3000/chats?page=${page}`, {
     mode: "cors",
