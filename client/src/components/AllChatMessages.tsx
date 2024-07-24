@@ -19,9 +19,8 @@ export default function AllChatMessages() {
                 return lastPage.nextPage
             }
             return undefined
-        }
+        },
     });
-
 
     return (
         <InfiniteScrollContainer className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto" hasNextPage={hasNextPage} isFetchingNextPage={isFetchingNextPage} fetchNextPage={fetchNextPage}>

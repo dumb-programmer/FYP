@@ -1,0 +1,131 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChatLink > renders correctly 1`] = `
+<div>
+  <div
+    class="relative"
+  >
+    <li
+      class="-z-0"
+    >
+      <a
+        class="flex justify-between"
+        href="/123"
+      >
+        chat
+        <button
+          class="btn btn-ghost btn-xs"
+        >
+          <svg
+            aria-hidden="true"
+            class="text-fuchsia-50"
+            data-slot="icon"
+            fill="currentColor"
+            height="20"
+            viewBox="0 0 16 16"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM6.5 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM12.5 6.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"
+            />
+          </svg>
+        </button>
+      </a>
+    </li>
+    <div
+      class="absolute right-0 z-10 overflow-hidden dropdown"
+      data-testid="chat-actions-dropdown"
+    >
+      <ul
+        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        <li>
+          <button
+            class="text-xs"
+          >
+            <svg
+              aria-hidden="true"
+              data-slot="icon"
+              fill="currentColor"
+              height="15"
+              viewBox="0 0 16 16"
+              width="15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
+                fill-rule="evenodd"
+              />
+            </svg>
+            Rename
+          </button>
+        </li>
+        <li>
+          <button
+            class="text-xs"
+          >
+            <svg
+              aria-hidden="true"
+              data-slot="icon"
+              fill="currentColor"
+              height="15"
+              viewBox="0 0 16 16"
+              width="15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z"
+                fill-rule="evenodd"
+              />
+            </svg>
+            Delete
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="flex gap-2"
+    >
+      <dialog
+        class="modal"
+        data-testid="modal"
+        id=":r0:"
+      >
+        <div
+          class="modal-box"
+        >
+          <h1
+            class="text-xl font-bold"
+          >
+            Delete Chat
+          </h1>
+          <p
+            class="mt-4"
+          >
+            Are you sure you want to delete this chat? This action is non-recoverable
+          </p>
+          <div
+            class="modal-action"
+          >
+            <button
+              class="btn"
+              data-testid="delete-confirmation-dialog-cancel-btn"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btn-error"
+              data-testid="delete-confirmation-dialog-delete-btn"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,90 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CreateChatButton > renders correctly 1`] = `
+<div>
+  <button
+    class="btn ghost"
+  >
+    <svg
+      aria-hidden="true"
+      data-slot="icon"
+      fill="currentColor"
+      height="20"
+      viewBox="0 0 16 16"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"
+      />
+    </svg>
+    Create Chat
+  </button>
+  <dialog
+    class="modal"
+    data-testid="modal"
+    id=":r0:"
+  >
+    <div
+      class="modal-box"
+    >
+      <h1
+        class="text-2xl font-bold"
+      >
+        Create Chat
+      </h1>
+      <form
+        class="flex flex-col gap-4 mt-4"
+      >
+        <div
+          class="form-control"
+        >
+          <label
+            for="name"
+          >
+            Name
+          </label>
+          <input
+            class="input input-bordered"
+            name="name"
+            required=""
+            type="text"
+          />
+        </div>
+        <div
+          class="form-control"
+        >
+          <label
+            for="document"
+          >
+            Document
+          </label>
+          <input
+            class="input file-input -ml-4 mt-2"
+            id="document"
+            name="document"
+            required=""
+            type="file"
+          />
+        </div>
+      </form>
+      <div
+        class="modal-action"
+      >
+        <button
+          class="btn btn-ghost"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn btn-primary"
+          type="submit"
+        >
+          Create
+        </button>
+      </div>
+    </div>
+  </dialog>
+</div>
+`;

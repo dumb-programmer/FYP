@@ -13,8 +13,8 @@ export default function DeleteConfirmationModal({ dialogRef, title, description,
             </p>
         </Content>
         <Action>
-            <button className="btn" onClick={() => dialogRef.current?.close()}>Cancel</button>
-            <button className="btn btn-error" onClick={onDelete}>Delete</button>
+            <button data-testid="delete-confirmation-dialog-cancel-btn"className="btn" onClick={() => dialogRef.current?.close()}>Cancel</button>
+            <button data-testid="delete-confirmation-dialog-delete-btn" className="btn btn-error" onClick={onDelete}>Delete</button>
         </Action>
     </Modal>
 }

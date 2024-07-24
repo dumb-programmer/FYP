@@ -38,7 +38,7 @@ export default function ChatLink({ chat, refetch }) {
                 </button>
             </NavLink>
         </li>
-        <div className={`absolute right-0 z-10 overflow-hidden dropdown${dropdownOpen ? "dropdown-open" : ""}`}>
+        <div data-testid="chat-actions-dropdown" className={`absolute right-0 z-10 overflow-hidden dropdown${dropdownOpen ? "dropdown-open" : ""}`}>
             <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                 <li>
                     <button className="text-xs" onClick={() => setEdit(true)}>

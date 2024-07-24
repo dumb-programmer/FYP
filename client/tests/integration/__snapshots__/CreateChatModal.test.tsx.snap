@@ -1,0 +1,72 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CreateChatModal > renders correctly 1`] = `
+<dialog
+  class="modal"
+  data-testid="modal"
+  id=":r0:"
+  open=""
+  style="display: block;"
+>
+  <div
+    class="modal-box"
+  >
+    <h1
+      class="text-2xl font-bold"
+    >
+      Create Chat
+    </h1>
+    <form
+      class="flex flex-col gap-4 mt-4"
+    >
+      <div
+        class="form-control"
+      >
+        <label
+          for="name"
+        >
+          Name
+        </label>
+        <input
+          class="input input-bordered"
+          name="name"
+          required=""
+          type="text"
+        />
+      </div>
+      <div
+        class="form-control"
+      >
+        <label
+          for="document"
+        >
+          Document
+        </label>
+        <input
+          class="input file-input -ml-4 mt-2"
+          id="document"
+          name="document"
+          required=""
+          type="file"
+        />
+      </div>
+    </form>
+    <div
+      class="modal-action"
+    >
+      <button
+        class="btn btn-ghost"
+        type="button"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
+        type="submit"
+      >
+        Create
+      </button>
+    </div>
+  </div>
+</dialog>
+`;

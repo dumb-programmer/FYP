@@ -30,7 +30,6 @@ describe("InfiniteScrollContainer", () => {
 
         expect(mockFetchNextPage).toHaveBeenCalled();
 
-        // The container is scrolled by 10px
         expect(HTMLDivElement.prototype.scrollBy).toHaveBeenCalled();
         expect(HTMLDivElement.prototype.scrollBy).toHaveBeenCalledWith({ top: 20, behavior: "smooth" });
     });

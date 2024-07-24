@@ -20,7 +20,7 @@ export default function InfiniteScrollContainer({ hasNextPage, isFetchingNextPag
                 behavior: "smooth",
             });
         }
-    }, [inView]);
+    }, [inView, fetchNextPage, isFetchingNextPage, hasNextPage]);
 
     return <div ref={containerRef} {...props}>
         <div ref={ref}></div>

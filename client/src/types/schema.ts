@@ -2,15 +2,15 @@ import { z } from "zod";
 
 export const SignupSchema = z
   .object({
-    email: z.string().email(),
+    email: z.string()  .min(1, { message: "Email is required" }).email({ message: "Invalid email address" }),
     firstName: z
       .string()
-      .min(1, { message: "First name must be at least 1 character" })
-      .max(100, { message: "First name must be less than 100 characters" }),
+      .min(1, { message: "First name is required" })
+      .max(100, { message: "First name must be 100 characters or fewer" }),
     lastName: z
       .string()
-      .min(1, { message: "Last name must be atleast 1 character" })
-      .max(100, { message: "Last name must be less than 100 character" }),
+      .min(1, { message: "Last name is required" })
+      .max(100, { message: "Last name must be 100 characters or fewer" }),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters" }),

@@ -6,7 +6,7 @@ import InfiniteScrollContainer from "./InfiniteScrollContainer";
 
 export default function SearchResults({ query }: { query: string }) {
     const { chatId } = useParams();
-    const { data, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfiniteQuery(`chat-${chatId}?${query}`, {
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfiniteQuery(`chat-${chatId}?query=${query}`, {
         queryFn: async ({ pageParam = 1 }) => {
             const response = await searchMessages(chatId, query, pageParam);
             if (response.ok) {

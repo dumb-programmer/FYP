@@ -4,7 +4,7 @@ import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import { useParams } from "react-router-dom";
 import { deleteMessage } from "@/api/api";
 
-export default function MessageList({ messages, refetchMessages, }) {
+export default function MessageList({ messages, refetchMessages }) {
     const deleteMessageDialogRef = useRef<HTMLDialogElement>(null);
     const [selectedMessageId, setSelectedMessageId] = useState();
     const { chatId } = useParams();
