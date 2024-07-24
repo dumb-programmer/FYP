@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const SignupSchema = z
   .object({
-    email: z.string()  .min(1, { message: "Email is required" }).email({ message: "Invalid email address" }),
+    email: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .email({ message: "Invalid email address" }),
     firstName: z
       .string()
       .min(1, { message: "First name is required" })
@@ -24,6 +27,11 @@ export const SignupSchema = z
   });
 
 export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email address" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
 });
