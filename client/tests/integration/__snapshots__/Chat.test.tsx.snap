@@ -1,0 +1,238 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chat > By default getMessages is called and all messages are shown 1`] = `
+<div>
+  <div
+    class="flex flex-col h-screen overflow-hidden"
+  >
+    <div
+      class="p-5"
+    >
+      <div
+        class="relative"
+        data-testid="searchbar"
+      >
+        <svg
+          aria-hidden="true"
+          class="absolute mt-[13px] ml-3"
+          color="#696969"
+          data-slot="icon"
+          fill="currentColor"
+          height="20"
+          viewBox="0 0 16 16"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <input
+          class="input input-bordered w-full pl-10"
+          placeholder="Search..."
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex-1 p-10 flex flex-col gap-10 overflow-y-auto"
+    >
+      <div />
+    </div>
+    <div
+      class="flex justify-center p-5 bg-base-100 w-full"
+    >
+      <form
+        class="flex gap-2 w-4/5"
+        data-testid="prompt-form"
+      >
+        <input
+          class="input input-bordered flex-1"
+          name="prompt"
+          placeholder="Prompt..."
+          required=""
+          type="text"
+        />
+        <button
+          aria-label="send"
+          class="btn btn-primary "
+        >
+          <svg
+            aria-hidden="true"
+            data-slot="icon"
+            fill="currentColor"
+            height="20"
+            viewBox="0 0 16 16"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z"
+            />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Chat > When the user types a query, searchMessages is called and SearchResults are shown 1`] = `
+<div>
+  <div
+    class="flex flex-col h-screen overflow-hidden"
+  >
+    <div
+      class="p-5"
+    >
+      <div
+        class="relative"
+        data-testid="searchbar"
+      >
+        <svg
+          aria-hidden="true"
+          class="absolute mt-[13px] ml-3"
+          color="#696969"
+          data-slot="icon"
+          fill="currentColor"
+          height="20"
+          viewBox="0 0 16 16"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <input
+          class="input input-bordered w-full pl-10"
+          placeholder="Search..."
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex-1 p-10 flex flex-col gap-10 overflow-y-auto"
+    >
+      <div />
+    </div>
+    <div
+      class="flex justify-center p-5 bg-base-100 w-full"
+    >
+      <form
+        class="flex gap-2 w-4/5"
+        data-testid="prompt-form"
+      >
+        <input
+          class="input input-bordered flex-1"
+          name="prompt"
+          placeholder="Prompt..."
+          required=""
+          type="text"
+        />
+        <button
+          aria-label="send"
+          class="btn btn-primary "
+        >
+          <svg
+            aria-hidden="true"
+            data-slot="icon"
+            fill="currentColor"
+            height="20"
+            viewBox="0 0 16 16"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z"
+            />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Chat > renders correctly 1`] = `
+<div>
+  <div
+    class="flex flex-col h-screen overflow-hidden"
+  >
+    <div
+      class="p-5"
+    >
+      <div
+        class="relative"
+        data-testid="searchbar"
+      >
+        <svg
+          aria-hidden="true"
+          class="absolute mt-[13px] ml-3"
+          color="#696969"
+          data-slot="icon"
+          fill="currentColor"
+          height="20"
+          viewBox="0 0 16 16"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <input
+          class="input input-bordered w-full pl-10"
+          placeholder="Search..."
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex-1 p-10 flex flex-col gap-10 overflow-y-auto"
+    >
+      <div />
+    </div>
+    <div
+      class="flex justify-center p-5 bg-base-100 w-full"
+    >
+      <form
+        class="flex gap-2 w-4/5"
+        data-testid="prompt-form"
+      >
+        <input
+          class="input input-bordered flex-1"
+          name="prompt"
+          placeholder="Prompt..."
+          required=""
+          type="text"
+        />
+        <button
+          aria-label="send"
+          class="btn btn-primary "
+        >
+          <svg
+            aria-hidden="true"
+            data-slot="icon"
+            fill="currentColor"
+            height="20"
+            viewBox="0 0 16 16"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z"
+            />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;
