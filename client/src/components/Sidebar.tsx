@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CreateChatButton from "./CreateChatButton";
 import ChatLink from "./ChatLink";
 import { ArrowLeftStartOnRectangleIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import { getChats } from "@/api/api";
+import { getChats, logout } from "@/api/api";
 
 export default function Sidebar() {
     const { data, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery("chat-links", {
@@ -141,8 +141,8 @@ export default function Sidebar() {
                 <p className="font-bold">{`${auth.firstName} ${auth.lastName}`}</p>
                 <span>{auth?.email}</span>
             </div>
-            <button aria-label="logout" className="btn btn-ghost" onClick={async () => {
-                const response = await fetch("http://localhost:3000/logout", { method: "POST", mode: "cors", credentials: "include" });
+            <button title="logout" className="btn btn-ghost" onClick={async () => {
+                const response = await logout();
                 if (response.ok) {
                     setAuth(null);
                     navigate("/login");

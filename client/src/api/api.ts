@@ -10,6 +10,14 @@ export function login(data: { email: string; password: string }) {
   });
 }
 
+export function logout() {
+  return fetch("http://localhost:3000/logout", {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+  });
+}
+
 export function signup(data: {
   firstName: string;
   lastName: string;
