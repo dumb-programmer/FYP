@@ -34,6 +34,13 @@ export function signup(data: {
   });
 }
 
+export function getUser() {
+  return fetch("http://localhost:3000/user", {
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
 export function getMessages(chatId: string, page: number) {
   return fetch(`http://localhost:3000/chats/${chatId}/messages?page=${page}`, {
     mode: "cors",

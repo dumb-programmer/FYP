@@ -1,3 +1,4 @@
+import { getUser } from "@/api/api";
 import Sidebar from "@/components/Sidebar";
 import SocketContextProvider from "@/components/SocketContextProvider";
 import useAuthContext from "@/hooks/useAuthContext";
@@ -10,7 +11,7 @@ export default function Home() {
     const { pathname, search } = useLocation();
 
     useEffect(() => {
-        fetch("http://localhost:3000/user", { credentials: "include", mode: "cors" }).then(response => {
+        getUser().then(response => {
             if (response.ok) {
                 response.json().then(user => {
                     setAuth(user);
