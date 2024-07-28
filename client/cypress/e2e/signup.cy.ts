@@ -3,7 +3,7 @@ describe("/signup", () => {
     cy.intercept("http://localhost:3000/user", {
       statusCode: 200,
       body: {},
-    }).as("signupRequest");
+    }).as("userRequest");
     cy.visit("/signup");
   });
 
