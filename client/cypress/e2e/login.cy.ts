@@ -1,5 +1,3 @@
-// cypress/e2e/login.cy.js
-
 describe("/login", () => {
   beforeEach(() => {
     cy.intercept("http://localhost:3000/user", {

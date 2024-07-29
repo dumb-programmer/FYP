@@ -18,7 +18,6 @@ export default function ChatLink({ chat, refetch }) {
         };
         document.addEventListener("click", onClick);
 
-
         return () => {
             document.removeEventListener("click", onClick);
         }
@@ -29,7 +28,7 @@ export default function ChatLink({ chat, refetch }) {
         <li className="-z-0">
             <NavLink className="flex justify-between" to={`/${chat._id}`}>
                 {chat.name}
-                <button className="btn btn-ghost btn-xs" onClick={(e) => {
+                <button data-testid="open-chat-actions-dropdown-btn" className="btn btn-ghost btn-xs" onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
                     setDropdownOpen(open => !open)

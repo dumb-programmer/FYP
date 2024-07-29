@@ -27,14 +27,14 @@ export default function Sidebar() {
     return <aside className="menu prose relative p-10 bg-base-300 flex flex-col">
         <h1 className="text-3xl">Chats</h1>
         <div className="pt-10 flex flex-col gap-6 overflow-auto h-5/6">
-            <CreateChatButton />
+            <CreateChatButton refetch={refetch} />
             <nav className="flex flex-col overflow-y-auto h-1/2">
                 <ul>
                     {
                         data && [].concat(...data.pages.map(page => page.chats)).map(chat => <ChatLink key={chat._id} chat={chat} refetch={refetch} />)
                     }
                 </ul>
-                {hasNextPage && <button className="mt-2 btn btn-sm text-xs" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>Load More <ChevronDownIcon color="black" height={20} width={20} /> </button>}
+                {hasNextPage && <button data-testid="load-more-chats-btn" className="mt-2 btn btn-sm text-xs" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>Load More <ChevronDownIcon color="black" height={20} width={20} /> </button>}
             </nav>
         </div>
         <div className="mt-auto flex gap-2 items-center">
