@@ -14,6 +14,7 @@ exports[`Sidebar > renders correctly 1`] = `
   >
     <button
       class="btn ghost"
+      data-testid="create-chat-btn"
     >
       <svg
         aria-hidden="true"
@@ -45,6 +46,7 @@ exports[`Sidebar > renders correctly 1`] = `
         </h1>
         <form
           class="flex flex-col gap-4 mt-4"
+          id="create-chat-form"
         >
           <div
             class="form-control"
@@ -56,6 +58,7 @@ exports[`Sidebar > renders correctly 1`] = `
             </label>
             <input
               class="input input-bordered"
+              id="name"
               name="name"
               required=""
               type="text"
@@ -89,6 +92,7 @@ exports[`Sidebar > renders correctly 1`] = `
           </button>
           <button
             class="btn btn-primary"
+            form="create-chat-form"
             type="submit"
           >
             Create

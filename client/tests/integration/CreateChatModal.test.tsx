@@ -1,16 +1,18 @@
 import React, { useRef } from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { expect, describe, it, vi, beforeEach, afterEach } from "vitest";
 import CreateChatModal from "../../src/components/CreateChatModal";
 import userEvent from "@testing-library/user-event";
 import { createChat } from "../../src/api/api";
 
-vi.mock("../../src/api/api.ts", async () => ({ ...await vi.importActual("../../src/api/api.ts"), createChat: vi.fn().mockReturnValue({ ok: true }) }))
+vi.mock("../../src/api/api.ts")
+
+const mockRefetch = vi.fn();
 
 const CreateChatModalWrapper = () => {
     const ref = useRef<HTMLDialogElement | null>(null);
 
-    return <CreateChatModal dialogRef={ref} />;
+    return <CreateChatModal dialogRef={ref} refetch={mockRefetch} />;
 };
 
 const renderComponent = () => {
@@ -99,7 +101,9 @@ describe("CreateChatModal", () => {
     });
 
     it("submit button creates a new chat and closes the modal", async () => {
-        renderComponent();
+        createChat.mockReturnValue({ ok: true });
+
+        const { container } = renderComponent();
 
         const nameInput = screen.getByRole("textbox");
 
@@ -111,15 +115,16 @@ describe("CreateChatModal", () => {
 
         await userEvent.upload(fileInput, file);
 
-        const submitBtn = screen.getByRole("button", { name: /create/i });
-
-        await userEvent.click(submitBtn);
-
-        expect(createChat).toHaveBeenCalled();
+        fireEvent.submit(container.querySelector("#create-chat-form"));
 
         const formData = new FormData();
         formData.set("name", "chat");
         formData.set("document", file);
-        expect(createChat).toHaveBeenCalledWith(formData);
+
+        await waitFor(() => {
+            expect(createChat).toHaveBeenCalled();
+            expect(createChat).toHaveBeenCalledWith(formData);
+            expect(mockRefetch).toHaveBeenCalled();
+        })
     });
 })

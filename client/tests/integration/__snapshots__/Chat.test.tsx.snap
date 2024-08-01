@@ -38,6 +38,7 @@ exports[`Chat > By default getMessages is called and all messages are shown 1`] 
     </div>
     <div
       class="flex-1 p-10 flex flex-col gap-10 overflow-y-auto"
+      id="messages-container"
     >
       <div />
     </div>
@@ -117,6 +118,7 @@ exports[`Chat > When the user types a query, searchMessages is called and Search
     </div>
     <div
       class="flex-1 p-10 flex flex-col gap-10 overflow-y-auto"
+      id="messages-container"
     >
       <div />
     </div>
@@ -196,6 +198,7 @@ exports[`Chat > renders correctly 1`] = `
     </div>
     <div
       class="flex-1 p-10 flex flex-col gap-10 overflow-y-auto"
+      id="messages-container"
     >
       <div />
     </div>

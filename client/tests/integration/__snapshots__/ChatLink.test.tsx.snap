@@ -15,6 +15,7 @@ exports[`ChatLink > renders correctly 1`] = `
         chat
         <button
           class="btn btn-ghost btn-xs"
+          data-testid="open-chat-actions-dropdown-btn"
         >
           <svg
             aria-hidden="true"

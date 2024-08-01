@@ -13,6 +13,8 @@ vi.mock("react-router-dom", async () => ({
     }),
 }));
 
+vi.mock("react-query");
+
 const mockSocket = {
     on: vi.fn(),
     off: vi.fn(),

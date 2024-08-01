@@ -7,6 +7,7 @@ exports[`WelcomeScreen > renders correctly 1`] = `
 >
   <h1
     class="text-5xl font-bold"
+    data-testid="welcome-heading"
   >
     Welcome
   </h1>
