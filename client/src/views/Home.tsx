@@ -30,16 +30,16 @@ export default function Home() {
         });
     }, [navigate, setAuth, pathname, search]);
 
-    if (auth) {
-        return <div className="h-screen w-screen flex overflow-hidden">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto">
-                <SocketContextProvider>
-                    <Outlet />
-                </SocketContextProvider>
-            </main>
-        </div>;
+    if (!auth) {
+        return null;
     }
 
-    return null;
+    return <div className="h-screen w-screen flex overflow-hidden">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto">
+            <SocketContextProvider>
+                <Outlet />
+            </SocketContextProvider>
+        </main>
+    </div>;
 }

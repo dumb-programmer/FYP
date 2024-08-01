@@ -1,5 +1,5 @@
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 interface InfiniteScrollContainerProps extends React.HTMLProps<HTMLDivElement> {
     hasNextPage: boolean | undefined;
@@ -22,7 +22,7 @@ export default function InfiniteScrollContainer({ hasNextPage, isFetchingNextPag
         }
     }, [inView, fetchNextPage, isFetchingNextPage, hasNextPage]);
 
-    return <div ref={containerRef} {...props}>
+    return <div id="messages-container" ref={containerRef} {...props}>
         <div ref={ref}></div>
         {
             children

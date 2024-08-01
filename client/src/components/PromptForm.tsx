@@ -3,6 +3,7 @@ import useSocketContext from "@/hooks/useSocketContext";
 import { PaperAirplaneIcon, StopIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 
 export default function PromptForm() {
@@ -15,10 +16,14 @@ export default function PromptForm() {
     const { chatId } = useParams();
     const socket = useSocketContext();
     const [isCancelable, setIsCancelable] = useState(false)
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         const onMessageStart = () => setIsCancelable(true);
-        const onMessageStop = () => setIsCancelable(false);
+        const onMessageStop = () => {
+            setIsCancelable(false);
+            queryClient.invalidateQueries(`chat-${chatId}`)
+        }
 
         socket.on("message-start", onMessageStart);
         socket.on("message-stop", onMessageStop);
@@ -27,7 +32,7 @@ export default function PromptForm() {
             socket.off("message-start", onMessageStart);
             socket.off("message-stop", onMessageStop);
         }
-    }, [socket]);
+    }, [socket, queryClient, chatId]);
 
     return (
         <form data-testid="prompt-form" className="flex gap-2 w-4/5" onSubmit={!isCancelable ? handleSubmit(async (data) => {
