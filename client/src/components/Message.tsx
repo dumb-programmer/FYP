@@ -1,13 +1,17 @@
 import { TrashIcon } from "@heroicons/react/16/solid";
 import CopyToClipboard from "./CopyToClipboardButton";
+import PositiveFeedbackButton from "./PositiveFeedbackButton";
+import NegativeFeedbackButton from "./NegativeFeedbackButton";
 
 type MessageProps = {
     message: any;
+    onThumbsUp: () => void;
+    onThumbsDown: () => void;
     onDelete?: () => void;
     cursor?: boolean;
 }
 
-export default function Message({ message, onDelete, cursor = false }: MessageProps) {
+export default function Message({ message, onThumbsUp, onThumbsDown, onDelete, cursor = false }: MessageProps) {
     return <div data-testid="message" key={message._id} className="flex flex-col gap-8">
         <div className="flex items-center gap-4">
             <div className="h-20 w-20 bg-accent rounded-full flex items-center justify-center text-slate-50 font-bold">User</div>
@@ -27,6 +31,8 @@ export default function Message({ message, onDelete, cursor = false }: MessagePr
             onDelete && <div className="flex justify-start pl-20 gap-2">
                 <button title="delete-button" className="btn btn-sm btn-ghost" onClick={onDelete}><TrashIcon color="red" height={15} width={15} /></button>
                 <CopyToClipboard data={message.response} />
+                <PositiveFeedbackButton onClick={onThumbsUp} />
+                <NegativeFeedbackButton onClick={onThumbsDown} />
             </div>
         }
     </div>
