@@ -1,9 +1,10 @@
+import validateQuery from "../middleware/validateQuery";
 import validateReq from "../middleware/validateReq";
 import Category from "../models/categories";
 import Feedback from "../models/feedback";
 import Message from "../models/message";
 import { asyncHandler } from "../utils/asyncHandler";
-import { FeedbackSchema } from "../utils/schema";
+import { FeedbackSchema, PaginatedQuerySchema } from "../utils/schema";
 
 export const createFeedback = [
     validateReq(FeedbackSchema),
@@ -31,9 +32,32 @@ export const createFeedback = [
 ];
 
 export const getAllFeedbacks = [
+    validateQuery(PaginatedQuerySchema),
     asyncHandler(async (req, res) => {
-        const feedback = await Feedback.find();
+        const { page = 1, limit = 10 } = req.query;
 
-        return res.json(feedback);
+        const skip = (+page - 1) * limit;
+
+        const feedbacks = await Promise.all((
+            await Feedback.find()
+                .skip(skip)
+                .limit(limit + 1)).map(async (feedback) => {
+                    const [message, category] = await Promise.all([
+                        Message.findById(feedback.messageId, { prompt: true, response: true }),
+                        Category.findById(feedback.categoryId)
+                    ]);
+
+                    return { ...feedback._doc, ...message._doc, category: category?.name }
+
+                }));
+
+        const total = Math.round((await Feedback.countDocuments()) / limit);
+
+        res.json({
+            feedbacks: feedbacks.slice(0, limit),
+            nextPage: +page + 1,
+            hasMore: feedbacks.length > limit,
+            total,
+        });
     })
 ]
