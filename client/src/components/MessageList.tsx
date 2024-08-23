@@ -42,14 +42,32 @@ export default function MessageList({ messages, refetchMessages }) {
             deleteMessageDialogRef.current?.close();
             setSelectedMessageId(null);
         }} />
-        <PositiveFeedbackModal dialogRef={positiveFeedbackFormRef} onCancel={() => {
-            positiveFeedbackFormRef.current?.close();
-            setSelectedMessageId(null);
-        }} />
-        <NegativeFeedbackModal dialogRef={negativeFeedbackFormRef} onCancel={() => {
-            negativeFeedbackFormRef.current?.close();
-            setSelectedMessageId(null);
-        }} />
+        <PositiveFeedbackModal
+            dialogRef={positiveFeedbackFormRef}
+            messageId={selectedMessageId}
+            onCancel={() => {
+                positiveFeedbackFormRef.current?.close();
+                setSelectedMessageId(null);
+            }}
+            onSuccess={() => {
+                refetchMessages();
+                positiveFeedbackFormRef.current?.close();
+                setSelectedMessageId(null);
+            }} />
+        <NegativeFeedbackModal
+            dialogRef={negativeFeedbackFormRef}
+            messageId={selectedMessageId}
+            onCancel={() => {
+                negativeFeedbackFormRef.current?.close();
+                setSelectedMessageId(null);
+            }}
+            onSuccess={() => {
+                refetchMessages();
+                positiveFeedbackFormRef.current?.close();
+                setSelectedMessageId(null);
+            }}
+
+        />
 
     </>
 }

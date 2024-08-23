@@ -31,8 +31,8 @@ export default function Message({ message, onThumbsUp, onThumbsDown, onDelete, c
             onDelete && <div className="flex justify-start pl-20 gap-2">
                 <button title="delete-button" className="btn btn-sm btn-ghost" onClick={onDelete}><TrashIcon color="red" height={15} width={15} /></button>
                 <CopyToClipboard data={message.response} />
-                <PositiveFeedbackButton onClick={onThumbsUp} />
-                <NegativeFeedbackButton onClick={onThumbsDown} />
+                <PositiveFeedbackButton filled={message?.feedback?.positive} onClick={message?.feedback ? undefined : onThumbsUp} />
+                <NegativeFeedbackButton filled={message?.feedback?.negative} onClick={message?.feedback ? undefined : onThumbsDown} />
             </div>
         }
     </div>

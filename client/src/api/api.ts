@@ -120,3 +120,15 @@ export function deleteChat(chatId: string) {
     mode: "cors",
   });
 }
+
+export function sendFeedback(data: { type: "positive" | "negative", comments: string, category: string, messageId: string }) {
+  return fetch("http://localhost:3000/feedback/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    credentials: "include",
+    mode: "cors",
+  });
+}

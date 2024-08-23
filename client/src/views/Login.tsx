@@ -20,19 +20,21 @@ export default function Login() {
 
     const redirect = searchParams.get("redirect");
 
+    const onSubmit = handleSubmit(async (data) => {
+        const response = await login(data);
+        if (response.ok) {
+            navigate(redirect || "/");
+        }
+        else {
+            setError("root", {
+                message: "Invalid credentials"
+            });
+        }
+    });
+
     return <main className="min-h-screen w-screen flex justify-center items-center">
         <div className="card p-10 shadow-md">
-            <form className="flex flex-col gap-4 md:min-w-96" onSubmit={handleSubmit(async (data) => {
-                const response = await login(data);
-                if (response.ok) {
-                    navigate(redirect || "/");
-                }
-                else {
-                    setError("root", {
-                        message: "Invalid credentials"
-                    });
-                }
-            })}>
+            <form className="flex flex-col gap-4 md:min-w-96" onSubmit={onSubmit}>
                 <h1 className="card-title text-2xl">Login</h1>
                 <div className="form-control">
                     <label className="label" htmlFor="email">Email</label>

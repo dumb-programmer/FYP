@@ -1,3 +1,4 @@
+import { sendFeedback } from "@/api/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -5,8 +6,8 @@ import { z } from "zod";
 const options = ["correct", "easy-to-understand", "complete", "other"] as const;
 
 const schema = z.object({ category: z.enum(options), comments: z.string().max(100) });
-export default function PositiveFeedbackForm({ id }: { id: string }) {
-    const { handleSubmit, watch, register } = useForm({
+export default function PositiveFeedbackForm({ id, messageId, onSuccess }: { id: string, messageId: string, onSuccess: () => void }) {
+    const { handleSubmit, watch, register, formState: { isSubmitting } } = useForm({
         defaultValues: {
             category: options[0],
             comments: ""
@@ -15,7 +16,13 @@ export default function PositiveFeedbackForm({ id }: { id: string }) {
     });
 
     const onSubmit = handleSubmit(async (data) => {
-        console.log(data);
+        if (!isSubmitting) {
+            const response = await sendFeedback({ ...data, type: "positive", messageId });
+
+            if (response.ok) {
+                onSuccess();
+            }
+        }
     });
 
     return <form id={id} className="flex flex-col gap-6" onSubmit={onSubmit}>

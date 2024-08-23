@@ -19,14 +19,16 @@ export default function Signup() {
         resolver: zodResolver(SignupSchema)
     });
 
+    const onSubmit = handleSubmit(async (data) => {
+        const response = await signup(data);
+        if (response.status === 409) {
+            setError("email", { message: "A user with this email already exists" })
+        }
+    });
+
     return <main className="min-h-screen flex justify-center items-center">
         <div className="card shadow-md">
-            <form className="flex flex-col gap-4 p-10" onSubmit={handleSubmit(async (data) => {
-                const response = await signup(data);
-                if (response.status === 409) {
-                    setError("email", { message: "A user with this email already exists" })
-                }
-            })}>
+            <form className="flex flex-col gap-4 p-10" onSubmit={onSubmit}>
                 <h1 className="card-title text-2xl">Signup</h1>
                 <div className="flex gap-4 flex-wrap">
                     <div className="form-control w-full md:w-auto">
