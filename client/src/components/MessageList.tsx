@@ -63,7 +63,7 @@ export default function MessageList({ messages, refetchMessages }) {
             }}
             onSuccess={() => {
                 refetchMessages();
-                positiveFeedbackFormRef.current?.close();
+                negativeFeedbackFormRef.current?.close();
                 setSelectedMessageId(null);
             }}
 

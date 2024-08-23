@@ -8,6 +8,8 @@ import { QueryClientProvider, QueryClient } from "react-query"
 import Chat from "./views/Chat"
 import WelcomeScreen from "./views/WelcomeScreen"
 import "@/styles/App.css"
+import AdminLogin from "./views/AdminLogin"
+import AdminDashboard from "./views/AdminDashboard"
 
 const client = new QueryClient();
 function App() {
@@ -16,6 +18,10 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/admin">
+              <Route index element={<AdminLogin />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+            </Route>
             <Route path="/" element={<Home />} >
               <Route index element={<WelcomeScreen />} />
               <Route path="/:chatId" element={<Chat />} />

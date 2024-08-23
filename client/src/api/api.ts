@@ -132,3 +132,14 @@ export function sendFeedback(data: { type: "positive" | "negative", comments: st
     mode: "cors",
   });
 }
+
+export function getFeedbackList(page: number = 1, limit: number = 10) {
+  return fetch(`http://localhost:3000/feedback/?page=${page}&limit=${limit}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+}
