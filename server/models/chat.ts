@@ -3,8 +3,8 @@ import mongoose, { Schema } from "mongoose";
 const ChatSchema = new Schema(
   {
     name: { type: String },
-    index: { type: String, require: true },
-    userId: { type: Schema.ObjectId, require: true },
+    index: { type: String, required: true },
+    userId: { type: Schema.ObjectId, required: true },
   },
   { timestamps: true }
 );

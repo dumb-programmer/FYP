@@ -1,7 +1,7 @@
-import { ObjectId } from "mongodb";
+import { isValidObjectId } from "mongoose";
 import { z } from "zod";
 
-const SignupSchema = z.object({
+export const SignupSchema = z.object({
   firstName: z
     .string()
     .min(1, { message: "firstName must be at least 1 characters long" })
@@ -16,21 +16,24 @@ const SignupSchema = z.object({
     .min(8, { message: "password must be at least 8 characters long" }),
 });
 
-const LoginSchema = SignupSchema.omit({ firstName: true, lastName: true });
+export const LoginSchema = SignupSchema.omit({
+  firstName: true,
+  lastName: true,
+});
 
-const ChatSchema = z.object({
+export const ChatSchema = z.object({
   name: z
     .string()
     .min(5, { message: "name must be at least 5 characters long" }),
 });
 
-const QuerySchema = z.object({
+export const QuerySchema = z.object({
   prompt: z
     .string()
     .min(10, { message: "prompt must be at least 10 character long" }),
 });
 
-const ChatIDSchema = z.object({
+export const ChatIDSchema = z.object({
   chatId: z.string().refine(
     (value) => {
       return /^[0-9a-fA-F]{24}$/.test(value);
@@ -39,7 +42,7 @@ const ChatIDSchema = z.object({
   ),
 });
 
-const PaginatedQuerySchema = z.object({
+export const PaginatedQuerySchema = z.object({
   page: z
     .string()
     .refine(
@@ -54,11 +57,26 @@ const PaginatedQuerySchema = z.object({
     .optional(),
 });
 
-export {
-  SignupSchema,
-  LoginSchema,
-  ChatSchema,
-  QuerySchema,
-  ChatIDSchema,
-  PaginatedQuerySchema,
-};
+export const FeedbackSchema = z.object({
+  type: z.enum(["positive", "negative"]),
+  comments: z.string().max(500),
+  category: z.string(),
+  messageId: z.string().refine(val => {
+    return isValidObjectId(val);
+  })
+}).superRefine((data, ctx) => {
+  const { type, category } = data;
+
+  const validCategories = {
+    positive: ["correct", "easy-to-understand", "complete", "other"],
+    negative: ["offensive/unsafe", "not-factually-correct", "other"],
+  };
+
+  if (!validCategories[type]?.includes(category)) {
+    ctx.addIssue({
+      path: ['category'],
+      message: `Invalid category "${category}" for type "${type}".`,
+      code: z.ZodIssueCode.custom,
+    });
+  }
+});

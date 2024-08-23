@@ -7,6 +7,7 @@ import passport from "passport";
 import rateLimit from "express-rate-limit";
 import authRouter from "./routes/auth";
 import chatRouter from "./routes/chat";
+import feedbackRouter from "./routes/feedback";
 import isAuthenticated from "./middleware/isAuthenticated";
 import cors from "cors";
 import { io } from "./socket";
@@ -64,6 +65,7 @@ app.use(passport.session());
 
 app.use("/", authRouter);
 app.use("/chats", isAuthenticated, chatRouter);
+app.use("/feedback", isAuthenticated, feedbackRouter);
 
 app.use((req, res, next) => {
   return res.sendStatus(404);

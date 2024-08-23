@@ -2,10 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const MessageSchema = new Schema(
   {
-    prompt: { type: String, require: true },
-    response: { type: String, require: true },
-    chatId: { type: Schema.ObjectId, require: true },
-    userId: { type: Schema.ObjectId, require: true },
+    prompt: { type: String, required: true },
+    response: { type: String, required: true },
+    chatId: { type: Schema.ObjectId, required: true },
+    userId: { type: Schema.ObjectId, required: true },
   },
   { timestamps: true }
 );

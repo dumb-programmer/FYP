@@ -1,5 +1,6 @@
 import validateParams from "../middleware/validateParams";
 import validateQuery from "../middleware/validateQuery";
+import Feedback from "../models/feedback";
 import Message from "../models/message";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ChatIDSchema, PaginatedQuerySchema } from "../utils/schema";
@@ -19,10 +20,21 @@ export const getMessages = [
       ? { chatId, $text: { $search: query } }
       : { chatId };
 
-    const messages = await Message.find(searchDoc)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(PAGE_LIMIT + 1);
+    const messages = await Promise.all(
+      (await Message.find(searchDoc)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(PAGE_LIMIT + 1)
+      ).map(async message => {
+        const feedback = await Feedback.findOne({ messageId: message._id });
+        if (feedback) {
+          return { ...message._doc, feedback: { [feedback.type]: true } }
+        }
+        return message;
+      })
+    );
+
+    console.log(messages);
 
     res.json({
       messages: messages.slice(0, PAGE_LIMIT),

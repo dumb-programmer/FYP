@@ -1,6 +1,6 @@
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import { Ollama } from "@langchain/community/llms/ollama";
 import multer from "multer";
@@ -41,10 +41,12 @@ const upload = multer({
   },
 }).single("document");
 
-const embeddings = new HuggingFaceInferenceEmbeddings({
-  model: "sentence-transformers/all-MiniLM-L6-V2",
-  apiKey: process.env.HUGGING_FACE_API_KEY,
-});
+// const embeddings = new HuggingFaceInferenceEmbeddings({
+//   model: "sentence-transformers/all-MiniLM-L6-V2",
+//   apiKey: process.env.HUGGING_FACE_API_KEY,
+// });
+
+const embeddings = new HuggingFaceTransformersEmbeddings();
 
 const promptTemplate = PromptTemplate.fromTemplate(`
   Context:
