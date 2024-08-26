@@ -58,7 +58,10 @@ export default function ChatLink({ chat, refetch }) {
                 const response = await deleteChat(chat._id);
                 if (response.ok) {
                     refetch()
+                    deleteChatModalRef.current?.close();
                 }
+            }} onCancel={() => {
+                deleteChatModalRef.current?.close();
             }} />
         </div>
     </div> : <EditChatForm chat={chat} refetch={refetch} onCancel={() => setEdit(false)} />

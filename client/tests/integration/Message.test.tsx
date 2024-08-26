@@ -8,7 +8,9 @@ const PROMPT = "Hello";
 const RESPONSE = "Hi";
 
 const onDeleteMock = vi.fn();
-const renderComponent = (cursor = false, omitOnDelete = false) => render(<Message message={{ _id: _ID, prompt: PROMPT, response: RESPONSE }} onDelete={omitOnDelete ? undefined : onDeleteMock} cursor={cursor} />);
+const onThumbsUpMock = vi.fn();
+const onThumbsDownMock = vi.fn();
+const renderComponent = (cursor = false, omitOnDelete = false, hasFeedback = false) => render(<Message message={{ _id: _ID, prompt: PROMPT, response: RESPONSE, feedback: hasFeedback ? { feedback: { positive: true } } : undefined }} onDelete={omitOnDelete ? undefined : onDeleteMock} onThumbsUp={onThumbsUpMock} onThumbsDown={onThumbsDownMock} cursor={cursor} />);
 
 describe("Message", () => {
 
@@ -52,6 +54,61 @@ describe("Message", () => {
         fireEvent.click(deleteButton);
 
         expect(onDeleteMock).toHaveBeenCalled();
+    });
+
+    it("onThumbsUp is called on thumbs up button", () => {
+        renderComponent();
+
+        const thumbsUpBtn = screen.getByTitle(/thumbs-up/);
+
+        fireEvent.click(thumbsUpBtn);
+
+        expect(onThumbsUpMock).toHaveBeenCalled();
+    });
+
+    it("onThumbsDown is called on thumbs down button", () => {
+        renderComponent();
+
+        const thumbsDownBtn = screen.getByTitle(/thumbs-down/);
+
+        fireEvent.click(thumbsDownBtn);
+
+        expect(onThumbsDownMock).toHaveBeenCalled();
+    });
+
+    it("if the message already has feedback, then feedback buttons aren't clicked", () => {
+        onThumbsUpMock.mockReset();
+        onThumbsDownMock.mockReset();
+
+        renderComponent(false, false, true);
+
+        const thumbsUpBtn = screen.getByTitle(/thumbs-up/);
+
+        fireEvent.click(thumbsUpBtn);
+
+        expect(onThumbsUpMock).not.toHaveBeenCalled();
+
+        const thumbsDownBtn = screen.getByTitle(/thumbs-down/);
+
+        fireEvent.click(thumbsDownBtn);
+
+        expect(onThumbsDownMock).not.toHaveBeenCalled();
+    });
+
+    it("cursor is not shown by default", () => {
+        renderComponent();
+
+        const cursorIcon = screen.queryByTestId(/cursor-icon/);
+
+        expect(cursorIcon).not.toBeInTheDocument();
+    });
+
+    it("cursor is shown, if cursor props is true", () => {
+        renderComponent(true);
+
+        const cursorIcon = screen.getByTestId(/cursor-icon/);
+
+        expect(cursorIcon).toBeInTheDocument();
     });
 
 })

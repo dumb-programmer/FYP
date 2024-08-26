@@ -105,9 +105,9 @@ describe("ChatLink", () => {
 
         await userEvent.click(screen.getByRole("button", { name: /delete/i }));
 
-        expect(screen.getByRole("dialog")).toBeInTheDocument();
+        expect(screen.getByRole("dialog")).toBeVisible();
 
-        await userEvent.click(screen.getByTestId("delete-confirmation-dialog-cancel-btn"))
+        await userEvent.click(screen.getByTestId("delete-confirmation-dialog-cancel-btn"));
 
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });

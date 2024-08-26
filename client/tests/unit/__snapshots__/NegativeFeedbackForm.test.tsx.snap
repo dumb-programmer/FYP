@@ -1,0 +1,53 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NegativeFeedback > renders correctly 1`] = `
+<div>
+  <form
+    class="flex flex-col gap-6"
+    id="negative-feedback-form"
+  >
+    <div
+      class="form-control flex flex-wrap gap-4 flex-row text-sm"
+    >
+      <label
+        class="flex items-center gap-2 relative bg-gray-200 p-4 rounded-xl w-fit cursor-pointer hover:bg-gray-300 transition-all bg-slate-800 text-white hover:bg-slate-700"
+      >
+        <input
+          class="radio radio-primary invisible absolute"
+          name="category"
+          type="radio"
+          value="offensive/unsafe"
+        />
+        offensive/unsafe
+      </label>
+      <label
+        class="flex items-center gap-2 relative bg-gray-200 p-4 rounded-xl w-fit cursor-pointer hover:bg-gray-300 transition-all "
+      >
+        <input
+          class="radio radio-primary invisible absolute"
+          name="category"
+          type="radio"
+          value="not-factually-correct"
+        />
+        not factually correct
+      </label>
+      <label
+        class="flex items-center gap-2 relative bg-gray-200 p-4 rounded-xl w-fit cursor-pointer hover:bg-gray-300 transition-all "
+      >
+        <input
+          class="radio radio-primary invisible absolute"
+          name="category"
+          type="radio"
+          value="other"
+        />
+        other
+      </label>
+    </div>
+    <textarea
+      class="textarea input-bordered"
+      name="comments"
+      placeholder="(Optional) Something else you'd like to say"
+    />
+  </form>
+</div>
+`;
