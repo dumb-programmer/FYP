@@ -47,7 +47,7 @@ const signup = [
         firstName,
         lastName,
       });
-      res.sendStatus(200);
+      res.sendStatus(201);
     } catch (error: any) {
       if (error.code && error.code === 11000) {
         res
@@ -87,7 +87,7 @@ const getUser = [
 
 const logout = [
   isAuthenticated,
-  (req: Response, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     req.logout((err) => {
       if (err) return next(err);
       return res.sendStatus(200);

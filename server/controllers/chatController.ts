@@ -82,7 +82,7 @@ export const createChat = [
   validateReq(ChatSchema),
   asyncHandler(async (req, res) => {
     const { name } = req.body;
-    const loader = new PDFLoader(new Blob([req.file?.buffer]));
+    const loader = new PDFLoader(new Blob([req.file?.buffer as Buffer]));
     const docs = await loader.load();
 
     const splitter = new RecursiveCharacterTextSplitter({
@@ -98,7 +98,7 @@ export const createChat = [
     const chat = await Chat.create({
       name,
       index: collectionName,
-      userId: req.user._id,
+      userId: req?.user?._id,
     });
     return res.json(chat);
   }),
@@ -109,7 +109,7 @@ export const getChatName = [
   asyncHandler(async (req, res) => {
     const { chatId } = req.params;
     const chat = await Chat.findOne(
-      { _id: chatId, userId: req.user._id },
+      { _id: chatId, userId: req?.user?._id },
       { name: 1, _id: 0 }
     );
     return res.json(chat);
@@ -164,7 +164,7 @@ export const query = [
               prompt,
               response: word,
               chatId,
-              userId: req.user._id,
+              userId: req?.user?._id,
             })
           )._id;
           first = false;
@@ -188,7 +188,7 @@ export const getChats = [
     const { page = 1 } = req.query;
     const skip = (+page - 1) * PAGE_LIMIT;
 
-    const chats = await Chat.find({ userId: req.user._id })
+    const chats = await Chat.find({ userId: req?.user?._id })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(PAGE_LIMIT + 1);
@@ -209,7 +209,7 @@ export const deleteChat = [
     if (!chat) {
       return res.sendStatus(404);
     }
-    if (chat?.userId !== req.user._id) {
+    if (chat.userId.toString() !== req?.user?._id) {
       return res.sendStatus(403);
     }
 
@@ -234,7 +234,7 @@ export const editChat = [
       return res.sendStatus(404);
     }
 
-    if (chat.userId !== req.user._id) {
+    if (chat.userId.toString() !== req?.user?._id) {
       return res.sendStatus(403);
     }
 

@@ -17,4 +17,6 @@ export default (async () => {
     mongoose.connection.on("close", async () => {
         await mongoServer.stop();
     });
+
+    return mongoServer;
 })()

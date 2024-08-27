@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export default (async () => {
+(async () => {
     try {
         await mongoose.connect(
             process.env.MONGODB_CONNECTION_STRING as string

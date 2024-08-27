@@ -1,9 +1,11 @@
+import { FilterQuery } from "mongoose";
 import validateParams from "../middleware/validateParams";
 import validateQuery from "../middleware/validateQuery";
 import Feedback from "../models/feedback";
 import Message from "../models/message";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ChatIDSchema, PaginatedQuerySchema } from "../utils/schema";
+
 
 const PAGE_LIMIT = 5;
 
@@ -21,14 +23,14 @@ export const getMessages = [
       : { chatId };
 
     const messages = await Promise.all(
-      (await Message.find(searchDoc)
+      (await Message.find(searchDoc as FilterQuery<unknown>)
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(PAGE_LIMIT + 1)
       ).map(async message => {
         const feedback = await Feedback.findOne({ messageId: message._id });
         if (feedback) {
-          return { ...message._doc, feedback: { [feedback.type]: true } }
+          return { ...message.toObject(), feedback: { [feedback.type]: true } }
         }
         return message;
       })
@@ -52,7 +54,7 @@ export const deleteMessage = [
     const result = await Message.deleteOne({
       _id: messageId,
       chatId,
-      userId: req.user._id,
+      userId: req?.user?._id,
     });
 
     if (result.deletedCount === 0) {

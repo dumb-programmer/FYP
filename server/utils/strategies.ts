@@ -72,17 +72,20 @@ const localStrategy = new LocalStrategy.Strategy(
     ) => void
   ) => {
     const user = await User.findOne({ email });
+
     if (!user) {
       done(null);
       return;
     }
+
     const passwordsMatched = bcrypt.compareSync(
       password,
       user?.password as string
     );
+
     if (passwordsMatched) {
       done(null, {
-        _id: user._id,
+        _id: user._id.toString(),
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,

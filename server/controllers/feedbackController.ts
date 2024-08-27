@@ -36,27 +36,27 @@ export const getAllFeedbacks = [
     asyncHandler(async (req, res) => {
         const { page = 1, limit = 10 } = req.query;
 
-        const skip = (+page - 1) * limit;
+        const skip = (+page - 1) * +limit;
 
         const feedbacks = await Promise.all((
             await Feedback.find()
                 .skip(skip)
-                .limit(limit + 1)).map(async (feedback) => {
+                .limit(+limit + 1)).map(async (feedback) => {
                     const [message, category] = await Promise.all([
                         Message.findById(feedback.messageId, { prompt: true, response: true }),
                         Category.findById(feedback.categoryId)
                     ]);
 
-                    return { ...feedback._doc, ...message._doc, category: category?.name }
+                    return { ...feedback.toObject(), ...message?.toObject(), category: category?.name }
 
                 }));
 
-        const total = Math.round((await Feedback.countDocuments()) / limit);
+        const total = Math.round((await Feedback.countDocuments()) / +limit);
 
         res.json({
-            feedbacks: feedbacks.slice(0, limit),
+            feedbacks: feedbacks.slice(0, +limit),
             nextPage: +page + 1,
-            hasMore: feedbacks.length > limit,
+            hasMore: feedbacks.length > +limit,
             total,
         });
     })

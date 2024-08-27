@@ -8,7 +8,7 @@ export const SignupSchema = z.object({
     .max(100, { message: "firstName cannot be greater than 100 characters" }),
   lastName: z
     .string()
-    .min(1, { message: "lastName must be at least 5 characters long" })
+    .min(1, { message: "lastName must be at least 1 characters long" })
     .max(100, { message: "lastName cannot be greater than 100 characters" }),
   email: z.string().email({ message: "Invalid email" }),
   password: z

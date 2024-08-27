@@ -11,6 +11,19 @@ import isAuthenticated from "./middleware/isAuthenticated";
 import cors from "cors";
 import sessionMiddleware from "./middleware/sessionMiddleware";
 
+interface CustomUser {
+    _id: string;
+    email?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+}
+
+declare global {
+    namespace Express {
+        interface User extends CustomUser { }
+    }
+}
+
 const app = express();
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));

@@ -1,9 +1,13 @@
 import passport from "passport";
 import { Server, Socket } from "socket.io";
 import sessionMiddleware from "./middleware/sessionMiddleware";
+import { NextFunction } from "express-serve-static-core";
 
 export const io = new Server({
-  cors: "http://localhost:5173",
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  },
 });
 
 // TODO: Replace with Redis
@@ -17,12 +21,12 @@ io.use(wrap(sessionMiddleware));
 io.use(wrap(passport.initialize()));
 io.use(wrap(passport.session()));
 
-io.use((socket, next) => {
-  sessionMiddleware(socket.request, {}, next);
+io.use((socket: Socket, next) => {
+  sessionMiddleware(socket.request as any, {} as any, next as NextFunction);
 });
 
 io.on("connection", (socket) => {
-  const sessions = socket.request.sessionStore.sessions;
+  const sessions = (socket.request as any).sessionStore.sessions;
 
   let user = null;
 
