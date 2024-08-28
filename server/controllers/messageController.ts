@@ -36,8 +36,6 @@ export const getMessages = [
       })
     );
 
-    console.log(messages);
-
     res.json({
       messages: messages.slice(0, PAGE_LIMIT),
       nextPage: +page + 1,

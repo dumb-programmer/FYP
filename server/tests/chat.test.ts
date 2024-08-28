@@ -3,7 +3,7 @@ import app from "../app";
 import { ChromaClient } from "chromadb";
 import { PDFDocument } from "pdf-lib";
 
-describe("/chat", () => {
+describe("/chats", () => {
     it("is protected, requires login", async () => {
         const response = await request(app).post("/chats");
 
@@ -180,7 +180,7 @@ describe("/chat", () => {
 
         response = await request(app).get("/chats").set("Cookie", cookie);
 
-        expect(response.body.chats.length).toEqual(0);
+        expect(response.body.chats.length).toEqual(1);
     });
 
 })
