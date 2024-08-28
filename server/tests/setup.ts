@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { ChromaClient } from "chromadb";
 import Chat from "../models/chat";
 import Message from "../models/message";
+import Category from "../models/categories";
 
 const chromaClient = new ChromaClient();
 let collectionId = crypto.randomUUID();
@@ -20,6 +21,8 @@ beforeAll(async () => {
             const chat = await Chat.create({ name: "chat", index: collectionId, userId: user._id });
 
             await Message.create({ prompt: "What?", response: "Why?", chatId: chat._id, userId: user._id });
+
+            await Promise.all(["correct", "easy-to-understand", "complete", "other", "offensive/unsafe", "not-factually-correct"].map(name => Category.create({ name })));
 
             resolve(0);
         });

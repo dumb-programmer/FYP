@@ -9,7 +9,7 @@ const FeedbackSchema = new Schema(
     },
     comments: { type: String },
     categoryId: { type: SchemaTypes.ObjectId, required: true },
-    messageId: { type: SchemaTypes.ObjectId, required: true }
+    messageId: { type: SchemaTypes.ObjectId, unique: true, required: true }
   },
   { timestamps: true }
 );

@@ -8,5 +8,6 @@ export default async () => {
 
     if (mongoServer) {
         (await mongoServer).stop();
+        (await mongoServer).cleanup();
     }
 }

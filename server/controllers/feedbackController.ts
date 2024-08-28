@@ -8,26 +8,28 @@ import { FeedbackSchema, PaginatedQuerySchema } from "../utils/schema";
 
 export const createFeedback = [
     validateReq(FeedbackSchema),
-    asyncHandler(async (req, res) => {
+    asyncHandler(async (req, res, next) => {
         const { type, comments, category, messageId } = req.body;
 
-        const feedback = await Feedback.findOne({ messageId });
+        try {
+            const message = await Message.findById(messageId);
 
-        if (feedback) {
-            return res.status(409).json({ message: "A feedback for this message was already provided" });
+            if (!message || message.userId.toString() !== req.user?._id) {
+                return res.status(404).json({ message: "No message with this id exists" });
+            }
+
+            const categoryDB = await Category.findOne({ name: category });
+
+            await Feedback.create({ type, comments, categoryId: categoryDB?._id, messageId });
+
+            return res.status(201).json({ message: "Feedback submitted" });
+
+        } catch (error: any) {
+            if (error.code && error.code === 11000) {
+                return res.status(409).json({ message: "A feedback for this message was already provided" });
+            }
+            next(error);
         }
-
-        const message = await Message.findById(messageId);
-
-        if (!message || message.userId.toString() !== req.user?._id) {
-            return res.status(404).json({ message: "No message with this id exists" });
-        }
-
-        const categoryDB = await Category.findOne({ name: category });
-
-        await Feedback.create({ type, comments, categoryId: categoryDB?._id, messageId });
-
-        return res.json(201).json({ message: "Feedback submitted" });
     }),
 ];
 
@@ -51,7 +53,7 @@ export const getAllFeedbacks = [
 
                 }));
 
-        const total = Math.round((await Feedback.countDocuments()) / +limit);
+        const total = Math.ceil((await Feedback.countDocuments()) / +limit);
 
         res.json({
             feedbacks: feedbacks.slice(0, +limit),

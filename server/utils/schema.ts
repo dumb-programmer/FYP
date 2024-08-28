@@ -60,7 +60,7 @@ export const PaginatedQuerySchema = z.object({
 
 export const FeedbackSchema = z.object({
   type: z.enum(["positive", "negative"]),
-  comments: z.string().max(500),
+  comments: z.string().max(500, "comments cannot be greater than 500 characters"),
   category: z.string(),
   messageId: z.string().refine(val => {
     return isValidObjectId(val);
