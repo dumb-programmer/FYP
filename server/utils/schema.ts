@@ -4,11 +4,11 @@ import { z } from "zod";
 export const SignupSchema = z.object({
   firstName: z
     .string()
-    .min(1, { message: "firstName must be at least 1 characters long" })
+    .min(1, { message: "firstName must be at least 1 character long" })
     .max(100, { message: "firstName cannot be greater than 100 characters" }),
   lastName: z
     .string()
-    .min(1, { message: "lastName must be at least 1 characters long" })
+    .min(1, { message: "lastName must be at least 1 character long" })
     .max(100, { message: "lastName cannot be greater than 100 characters" }),
   email: z.string().email({ message: "Invalid email" }),
   password: z
@@ -24,7 +24,8 @@ export const LoginSchema = SignupSchema.omit({
 export const ChatSchema = z.object({
   name: z
     .string()
-    .min(5, { message: "name must be at least 5 characters long" }),
+    .min(1, { message: "name must be at least 1 character long" })
+    .max(100, { message: "name cannot be greater than 100 characters" }),
 });
 
 export const QuerySchema = z.object({
@@ -36,7 +37,7 @@ export const QuerySchema = z.object({
 export const ChatIDSchema = z.object({
   chatId: z.string().refine(
     (value) => {
-      return /^[0-9a-fA-F]{24}$/.test(value);
+      return isValidObjectId(value);
     },
     { message: "Invalid ObjectId" }
   ),

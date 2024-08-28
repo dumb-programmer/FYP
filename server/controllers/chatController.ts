@@ -91,16 +91,19 @@ export const createChat = [
     });
     const splitDocuments = await splitter.splitDocuments(docs);
     const collectionName = crypto.randomUUID();
+
     await Chroma.fromDocuments(splitDocuments, embeddings, {
       collectionName,
       numDimensions: 384,
+
+
     });
     const chat = await Chat.create({
       name,
       index: collectionName,
       userId: req?.user?._id,
     });
-    return res.json(chat);
+    return res.status(201).json(chat);
   }),
 ];
 

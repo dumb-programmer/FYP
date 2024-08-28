@@ -1,8 +1,7 @@
 import request from "supertest";
 import app from "../app";
-import User from "../models/user";
 
-describe("/login", () => {
+describe("/signup", () => {
     it("without any data responds with 400", async () => {
         const response = await request(app).post("/signup");
 
@@ -39,7 +38,7 @@ describe("/login", () => {
         expect(response.status).toEqual(400);
         expect(response.headers["content-type"]).toMatch(/json/)
         expect(response.body.errors).not.toBeNull();
-        expect(response.body.errors.firstName).toEqual("firstName must be at least 1 characters long");
+        expect(response.body.errors.firstName).toEqual("firstName must be at least 1 character long");
     });
 
     it("firstName can be at most 100 character", async () => {
@@ -57,7 +56,7 @@ describe("/login", () => {
         expect(response.status).toEqual(400);
         expect(response.headers["content-type"]).toMatch(/json/)
         expect(response.body.errors).not.toBeNull();
-        expect(response.body.errors.lastName).toEqual("lastName must be at least 1 characters long");
+        expect(response.body.errors.lastName).toEqual("lastName must be at least 1 character long");
     });
 
     it("lastName can be at most 100 character", async () => {
