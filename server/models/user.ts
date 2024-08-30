@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   password: { type: String },
   firstName: { type: String },
   lastName: { type: String },
+  role: { type: String, values: ["admin"] }
 });
 
 const User = mongoose.model("user", UserSchema);

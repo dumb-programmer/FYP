@@ -102,8 +102,18 @@ describe("/feedback", () => {
         expect(response.status).toEqual(409);
     });
 
-    it("GET responds with 200 and feedbacks", async () => {
+    it("GET responds with 401 for non-admin users", async () => {
         const loginResponse = await request(app).post("/login").send({ email: "john@gmail.com", password: "12345678" });
+
+        const cookie = loginResponse.headers["set-cookie"][0];
+
+        const response = await request(app).get(`/feedback`).set("Cookie", cookie);
+
+        expect(response.status).toEqual(401);
+    });
+
+    it("GET responds with 200 for admin users", async () => {
+        const loginResponse = await request(app).post("/login").send({ email: "admin@gmail.com", password: "12345678" });
 
         const cookie = loginResponse.headers["set-cookie"][0];
 

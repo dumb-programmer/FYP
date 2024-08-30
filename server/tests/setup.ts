@@ -17,6 +17,9 @@ beforeAll(async () => {
         mongoose.connection.on("open", async () => {
             const salt = bcrypt.genSaltSync();
             const hashedPassword = bcrypt.hashSync("12345678", salt);
+            // create admin user
+            await User.create({ firstName: "test", lastName: "test", email: "admin@gmail.com", password: hashedPassword, role: "admin" });
+
             const user = await User.create({ firstName: "John", lastName: "Cena", email: "john@gmail.com", password: hashedPassword });
             const chat = await Chat.create({ name: "chat", index: collectionId, userId: user._id });
 

@@ -64,7 +64,7 @@ const login = [
   validateReq(LoginSchema),
   passport.authenticate("local"),
   (req: Request, res: Response) => {
-    return res.sendStatus(200);
+    return res.json(req.user);
   },
 ];
 

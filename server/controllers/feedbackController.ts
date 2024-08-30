@@ -1,3 +1,4 @@
+import isAdmin from "../middleware/isAdmin";
 import validateQuery from "../middleware/validateQuery";
 import validateReq from "../middleware/validateReq";
 import Category from "../models/categories";
@@ -35,6 +36,7 @@ export const createFeedback = [
 
 export const getAllFeedbacks = [
     validateQuery(PaginatedQuerySchema),
+    isAdmin,
     asyncHandler(async (req, res) => {
         const { page = 1, limit = 10 } = req.query;
 

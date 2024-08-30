@@ -89,6 +89,7 @@ const localStrategy = new LocalStrategy.Strategy(
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user?.role,
       });
     } else {
       done(null);
