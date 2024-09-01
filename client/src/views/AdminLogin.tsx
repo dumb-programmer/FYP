@@ -1,16 +1,31 @@
+import { login } from "@/api/api";
 import ErrorMessage from "@/components/ErrorMessage";
 import LoadingIcon from "@/components/LoadingIcon";
 import { LoginSchema } from "@/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({
+        defaultValues: {
+            email: "",
+            password: ""
+        },
         resolver: zodResolver(LoginSchema)
     });
+    const navigate = useNavigate();
 
     const onSubmit = handleSubmit(async (data) => {
-        console.log(data);
+        const response = await login(data);
+        if (response.ok) {
+            const responseData = await response.json();
+            if (responseData && responseData.role === "admin") {
+                navigate("/admin/dashboard");
+                return;
+            }
+        }
+        setError("root", { message: "Invalid credentials" });
     });
 
     return <main className="min-h-screen w-screen flex justify-center items-center">

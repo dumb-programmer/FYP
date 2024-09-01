@@ -3,8 +3,10 @@ import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
 import { useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
-import { getFeedbackList } from '@/api/api';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
+import { getFeedbackList, logout } from '@/api/api';
+import { ArrowLeftStartOnRectangleIcon, ChatBubbleLeftRightIcon, ChevronLeftIcon, ChevronRightIcon, HomeIcon } from '@heroicons/react/16/solid';
+import { NavLink, useNavigate } from 'react-router-dom';
+import useAuthContext from '@/hooks/useAuthContext';
 
 
 const colDefs = [
@@ -46,6 +48,8 @@ export default function AdminDashboard() {
         },
     });
     const [page, setPage] = useState(0);
+    const navigate = useNavigate();
+    const { setAuth } = useAuthContext();
 
     const onNext = async () => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -71,14 +75,23 @@ export default function AdminDashboard() {
     const end = start + data?.pages[page].feedbacks.length - 1;
     const total = data?.pages[0].total;
 
+    const onLogout = async () => {
+        const response = await logout();
+        if (response.ok) {
+            navigate("/admin/login");
+            setAuth(null);
+        }
+    }
+
     return <div className="min-h-screen w-screen flex">
-        <aside className="menu prose relative p-10 bg-base-300 flex flex-col">
+        <aside className="menu prose relative p-8 w-2/12 bg-base-300 flex flex-col justify-between">
             <nav>
-                <ul>
-                    <li>Home</li>
-                    <li>Feedback</li>
+                <ul className="flex flex-col gap-4">
+                    <li><NavLink to="/admin/dashbaord"> <HomeIcon height={20} width={20} /> Home</NavLink></li>
+                    <li><NavLink to="/admin/feedback"> <ChatBubbleLeftRightIcon height={20} width={20} /> Feedback</NavLink></li>
                 </ul>
             </nav>
+            <button className="btn btn-error w-full" onClick={onLogout}>Logout <ArrowLeftStartOnRectangleIcon height={20} width={20} /></button>
         </aside>
         <main className="flex-1 p-4">
             <div className="ag-theme-quartz relative h-full">

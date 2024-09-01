@@ -10,6 +10,7 @@ import WelcomeScreen from "./views/WelcomeScreen"
 import "@/styles/App.css"
 import AdminLogin from "./views/AdminLogin"
 import AdminDashboard from "./views/AdminDashboard"
+import AdminRouteGuard from "./views/AdminRouteGuard"
 
 const client = new QueryClient();
 function App() {
@@ -18,8 +19,8 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/admin">
-              <Route index element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminRouteGuard />}>
+              <Route path="login" element={<AdminLogin />} />
               <Route path="dashboard" element={<AdminDashboard />} />
             </Route>
             <Route path="/" element={<Home />} >
