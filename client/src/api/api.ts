@@ -1,5 +1,5 @@
 export function login(data: { email: string; password: string }) {
-  return fetch("http://localhost:3000/login", {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -11,7 +11,7 @@ export function login(data: { email: string; password: string }) {
 }
 
 export function logout() {
-  return fetch("http://localhost:3000/logout", {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/logout`, {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -24,7 +24,7 @@ export function signup(data: {
   email: string;
   password: string;
 }) {
-  return fetch("http://localhost:3000/signup", {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/signup`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -35,14 +35,14 @@ export function signup(data: {
 }
 
 export function getUser() {
-  return fetch("http://localhost:3000/user", {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/user`, {
     credentials: "include",
     mode: "cors",
   });
 }
 
 export function getMessages(chatId: string, page: number) {
-  return fetch(`http://localhost:3000/chats/${chatId}/messages?page=${page}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/messages?page=${page}`, {
     mode: "cors",
     credentials: "include",
   });
@@ -50,7 +50,7 @@ export function getMessages(chatId: string, page: number) {
 
 export function searchMessages(chatId: string, query: string, page: number) {
   return fetch(
-    `http://localhost:3000/chats/${chatId}/messages?query=${query}&page=${page}`,
+    `${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/messages?query=${query}&page=${page}`,
     {
       mode: "cors",
       credentials: "include",
@@ -59,7 +59,7 @@ export function searchMessages(chatId: string, query: string, page: number) {
 }
 
 export function deleteMessage(chatId: string, messageId: string) {
-  return fetch(`http://localhost:3000/chats/${chatId}/messages/${messageId}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/messages/${messageId}`, {
     method: "DELETE",
     mode: "cors",
     credentials: "include",
@@ -67,7 +67,7 @@ export function deleteMessage(chatId: string, messageId: string) {
 }
 
 export function sendPrompt(data: { prompt: string }, chatId?: string) {
-  return fetch(`http://localhost:3000/chats/${chatId}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}`, {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -79,7 +79,7 @@ export function sendPrompt(data: { prompt: string }, chatId?: string) {
 }
 
 export function createChat(formData: any) {
-  return fetch("http://localhost:3000/chats", {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats`, {
     method: "POST",
     body: formData,
     credentials: "include",
@@ -88,21 +88,21 @@ export function createChat(formData: any) {
 }
 
 export function getChats(page: number) {
-  return fetch(`http://localhost:3000/chats?page=${page}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats?page=${page}`, {
     mode: "cors",
     credentials: "include",
   });
 }
 
 export function getChatName(chatId: string) {
-  return fetch(`http://localhost:3000/chats/${chatId}/name`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/name`, {
     mode: "cors",
     credentials: "include",
   });
 }
 
 export function updateChat(chatId: string, name: string) {
-  return fetch(`http://localhost:3000/chats/${chatId}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}`, {
     method: "PATCH",
     body: JSON.stringify({ name }),
     headers: {
@@ -114,7 +114,7 @@ export function updateChat(chatId: string, name: string) {
 }
 
 export function deleteChat(chatId: string) {
-  return fetch(`http://localhost:3000/chats/${chatId}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}`, {
     method: "DELETE",
     credentials: "include",
     mode: "cors",
@@ -122,7 +122,7 @@ export function deleteChat(chatId: string) {
 }
 
 export function sendFeedback(data: { type: "positive" | "negative", comments: string, category: string, messageId: string }) {
-  return fetch("http://localhost:3000/feedback/", {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/feedback/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -134,7 +134,7 @@ export function sendFeedback(data: { type: "positive" | "negative", comments: st
 }
 
 export function getFeedbackList(page: number = 1, limit: number = 10) {
-  return fetch(`http://localhost:3000/feedback/?page=${page}&limit=${limit}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/feedback/?page=${page}&limit=${limit}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

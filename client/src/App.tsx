@@ -11,6 +11,7 @@ import "@/styles/App.css"
 import AdminLogin from "./views/AdminLogin"
 import AdminDashboard from "./views/AdminDashboard"
 import AdminRouteGuard from "./views/AdminRouteGuard"
+import AdminLayout from "./layout/AdminLayout"
 
 const client = new QueryClient();
 function App() {
@@ -21,7 +22,9 @@ function App() {
           <Routes>
             <Route path="/admin" element={<AdminRouteGuard />}>
               <Route path="login" element={<AdminLogin />} />
-              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="" element={<AdminLayout />}>
+                <Route path="dashboard" element={<AdminDashboard />} />
+              </Route>
             </Route>
             <Route path="/" element={<Home />} >
               <Route index element={<WelcomeScreen />} />

@@ -17,8 +17,6 @@ export default function AdminRouteGuard() {
         }
     });
 
-    console.log(pathname, loading);
-
     useEffect(() => {
         if (!loading) {
             if (auth && auth.role === "admin" && pathname === "/admin/login") {
