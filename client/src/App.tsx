@@ -12,6 +12,7 @@ import AdminLogin from "./views/AdminLogin"
 import AdminDashboard from "./views/AdminDashboard"
 import AdminRouteGuard from "./views/AdminRouteGuard"
 import AdminLayout from "./layout/AdminLayout"
+import AdminUsers from "./views/AdminUsers"
 
 const client = new QueryClient();
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="login" element={<AdminLogin />} />
               <Route path="" element={<AdminLayout />}>
                 <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="users" element={<AdminUsers />} />
               </Route>
             </Route>
             <Route path="/" element={<Home />} >

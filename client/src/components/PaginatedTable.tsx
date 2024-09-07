@@ -29,7 +29,7 @@ export default function PaginatedTable({ colDefs, data, limit, hasNextPage, isFe
     }
 
     const start = page === 0 ? page + 1 : page * limit + 1;
-    const end = start + data?.pages[page].feedbacks.length - 1;
+    const end = start + data?.pages[page].rows.length - 1;
     const total = data?.pages[0].total;
 
 
@@ -37,7 +37,7 @@ export default function PaginatedTable({ colDefs, data, limit, hasNextPage, isFe
     return <div className="ag-theme-quartz relative h-full">
         <div className="h-full pb-9">
             <AgGridReact
-                rowData={data?.pages[page]?.feedbacks}
+                rowData={data?.pages[page]?.rows}
                 columnDefs={colDefs}
             />
         </div>

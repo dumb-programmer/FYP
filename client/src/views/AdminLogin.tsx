@@ -20,7 +20,7 @@ export default function AdminLogin() {
         const response = await login(data);
         if (response.ok) {
             const responseData = await response.json();
-            if (responseData && responseData.role === "admin") {
+            if (responseData && responseData.isAdmin) {
                 navigate("/admin/dashboard");
                 return;
             }

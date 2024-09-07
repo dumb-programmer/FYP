@@ -19,7 +19,7 @@ export default function AdminRouteGuard() {
 
     useEffect(() => {
         if (!loading) {
-            if (auth && auth.role === "admin" && pathname === "/admin/login") {
+            if (auth && auth.isAdmin && pathname === "/admin/login") {
                 navigate("/admin/dashboard")
             }
             else if (!auth && pathname !== "/admin/login") {
@@ -28,7 +28,7 @@ export default function AdminRouteGuard() {
         }
     }, [loading, auth, pathname, navigate]);
 
-    if (!loading && auth && auth.role === "admin" && pathname !== "/admin/login") {
+    if (!loading && auth && auth.isAdmin && pathname !== "/admin/login") {
         return <Outlet />;
     }
 

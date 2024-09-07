@@ -134,8 +134,52 @@ export function sendFeedback(data: { type: "positive" | "negative", comments: st
 }
 
 export function getFeedbackList(page: number = 1, limit: number = 10) {
-  return fetch(`${import.meta.env.VITE_API_BASE_URL}/feedback/?page=${page}&limit=${limit}`, {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/feedback?page=${page}&limit=${limit}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
+export function getUsersList(page: number = 1, limit: number = 10) {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/users?page=${page}&limit=${limit}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
+export function deleteUser(id: string) {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
+export function blockUser(id: string) {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}/block`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+}
+
+export function unblockUser(id: string) {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}/unblock`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },

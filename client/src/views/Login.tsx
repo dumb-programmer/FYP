@@ -19,6 +19,7 @@ export default function Login() {
     const [searchParams] = useSearchParams();
 
     const redirect = searchParams.get("redirect");
+    const error = searchParams.get("error");
 
     const onSubmit = handleSubmit(async (data) => {
         const response = await login(data);
@@ -46,7 +47,7 @@ export default function Login() {
                     <input className="input input-bordered" id="password" type="password" {...register("password")} />
                     <ErrorMessage message={errors.password?.message} />
                 </div>
-                <ErrorMessage message={errors.root?.message} />
+                <ErrorMessage message={errors.root?.message || error} />
                 <button className="btn btn-primary">
                     {
                         isSubmitting ? <LoadingIcon size={25} stroke="white" /> : "Submit"
