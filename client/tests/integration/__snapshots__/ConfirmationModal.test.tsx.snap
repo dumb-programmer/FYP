@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ConfirmationModal > renders correctly 1`] = `
+<dialog
+  class="modal"
+  data-testid="modal"
+  id=":r0:"
+>
+  <div
+    class="modal-box"
+  >
+    <h1
+      class="text-xl font-bold"
+    >
+      Are you sure?
+    </h1>
+    <p
+      class="mt-4"
+    >
+      This is a non-recoverable action.
+    </p>
+    <div
+      class="modal-action"
+    >
+      <button
+        class="btn"
+        data-testid="delete-confirmation-dialog-cancel-btn"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-error"
+        data-testid="delete-confirmation-dialog-delete-btn"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</dialog>
+`;

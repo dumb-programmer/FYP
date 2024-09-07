@@ -1,20 +1,20 @@
 import React, { useRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { expect, describe, it, vi, beforeEach, afterEach } from "vitest";
-import DeleteConfirmationModal from "../../src/components/DeleteConfirmationModal";
+import ConfirmationModal from "../../src/components/ConfirmationModal";
 
 const mockedOnDelete = vi.fn();
 vi.mock("react", async () => ({ ...await vi.importActual("react"), useRef: vi.fn() }));
 
-const DeleteConfirmationModalWrapper = () => {
+const ConfirmationModalWrapper = () => {
     const ref = useRef<HTMLDialogElement | null>(null);
 
-    return <DeleteConfirmationModal dialogRef={ref} title="Are you sure?" description="This is a non-recoverable action." onDelete={mockedOnDelete} />;
+    return <ConfirmationModal dialogRef={ref} title="Are you sure?" description="This is a non-recoverable action." onPrimary={mockedOnDelete} onCancel={() => ref.current?.close()} />;
 };
 
-const renderComponent = () => render(<DeleteConfirmationModalWrapper />);
+const renderComponent = () => render(<ConfirmationModalWrapper />);
 
-describe("DeleteConfirmationModal", () => {
+describe("ConfirmationModal", () => {
     beforeEach(() => {
         HTMLDialogElement.prototype.showModal = vi.fn(function () {
             this.style.display = 'block';
