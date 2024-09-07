@@ -41,11 +41,6 @@ const upload = multer({
   },
 }).single("document");
 
-// const embeddings = new HuggingFaceInferenceEmbeddings({
-//   model: "sentence-transformers/all-MiniLM-L6-V2",
-//   apiKey: process.env.HUGGING_FACE_API_KEY,
-// });
-
 const embeddings = new HuggingFaceTransformersEmbeddings();
 
 const promptTemplate = PromptTemplate.fromTemplate(`

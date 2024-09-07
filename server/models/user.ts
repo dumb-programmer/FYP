@@ -2,11 +2,12 @@ import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new Schema({
   email: { type: String, unique: true },
-  username: { type: String, required: false },
+  username: { type: String },
   password: { type: String },
   firstName: { type: String },
   lastName: { type: String },
-  role: { type: String, values: ["admin"] }
+  isAdmin: { type: Boolean },
+  isBlocked: { type: Boolean }
 });
 
 const User = mongoose.model("user", UserSchema);

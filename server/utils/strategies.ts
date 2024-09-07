@@ -9,7 +9,7 @@ const googleStrategy = new GoogleStrategy.Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID as string,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    callbackURL: "http://localhost:3000/google/callback",
+    callbackURL: "http://localhost/google/callback",
     passReqToCallback: true,
   },
   function (
@@ -28,6 +28,10 @@ const googleStrategy = new GoogleStrategy.Strategy(
         }).then((createdUser) => done(null, createdUser));
         return;
       }
+      else if (user.isBlocked) {
+        done(null);
+        return;
+      }
       done(null, user);
     });
   }
@@ -37,7 +41,7 @@ const githubStrategy = new GitHubStrategy.Strategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID as string,
     clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    callbackURL: "http://localhost:3000/github/callback",
+    callbackURL: "http://localhost/github/callback",
   },
   function (
     accessToken: string,
@@ -53,6 +57,10 @@ const githubStrategy = new GitHubStrategy.Strategy(
           firstName,
           lastName,
         }).then((createdUser) => done(null, createdUser));
+        return;
+      }
+      else if (user.isBlocked) {
+        done(null);
         return;
       }
       done(null, user);
@@ -89,7 +97,7 @@ const localStrategy = new LocalStrategy.Strategy(
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user?.role,
+        isAdmin: user.isAdmin
       });
     } else {
       done(null);

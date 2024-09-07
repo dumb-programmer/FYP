@@ -69,13 +69,13 @@ const login = [
 ];
 
 const googleCallback = passport.authenticate("google", {
-  successRedirect: "http://localhost:5173",
-  failureRedirect: "http://localhost:5173",
+  successRedirect: "https://localhost:5173",
+  failureRedirect: "https://localhost:5173/login?error=Account+is+blocked",
 });
 
 const githubCallback = passport.authenticate("github", {
-  successRedirect: "http://localhost:5173",
-  failureRedirect: "http://localhost:5173",
+  successRedirect: "https://localhost:5173",
+  failureRedirect: "https://localhost:5173/login?error=Account+is+blocked",
 });
 
 const getUser = [

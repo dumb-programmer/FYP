@@ -62,9 +62,7 @@ export const FeedbackSchema = z.object({
   type: z.enum(["positive", "negative"]),
   comments: z.string().max(500, "comments cannot be greater than 500 characters"),
   category: z.string(),
-  messageId: z.string().refine(val => {
-    return isValidObjectId(val);
-  })
+  messageId: z.string().refine(val => isValidObjectId(val))
 }).superRefine((data, ctx) => {
   const { type, category } = data;
 
@@ -81,3 +79,7 @@ export const FeedbackSchema = z.object({
     });
   }
 });
+
+export const UserIdSchema = z.object({
+  userId: z.string().refine(val => isValidObjectId(val))
+})

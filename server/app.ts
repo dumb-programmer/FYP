@@ -7,16 +7,18 @@ import rateLimit from "express-rate-limit";
 import authRouter from "./routes/auth";
 import chatRouter from "./routes/chat";
 import feedbackRouter from "./routes/feedback";
+import userRouter from "./routes/user";
 import isAuthenticated from "./middleware/isAuthenticated";
 import cors from "cors";
 import sessionMiddleware from "./middleware/sessionMiddleware";
+import isAdmin from "./middleware/isAdmin";
 
 interface CustomUser {
     _id: string;
     email?: string | null;
     firstName?: string | null;
     lastName?: string | null;
-    role?: string | null;
+    isAdmin?: boolean | null;
 }
 
 declare global {
@@ -27,7 +29,7 @@ declare global {
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(helmet());
 
@@ -49,6 +51,7 @@ app.use(passport.session());
 app.use("/", authRouter);
 app.use("/chats", isAuthenticated, chatRouter);
 app.use("/feedback", isAuthenticated, feedbackRouter);
+app.use("/users", isAuthenticated, isAdmin, userRouter);
 
 app.use((req, res, next) => {
     return res.sendStatus(404);

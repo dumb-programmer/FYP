@@ -58,7 +58,7 @@ export const getAllFeedbacks = [
         const total = Math.ceil((await Feedback.countDocuments()) / +limit);
 
         res.json({
-            feedbacks: feedbacks.slice(0, +limit),
+            rows: feedbacks.slice(0, +limit),
             nextPage: +page + 1,
             hasMore: feedbacks.length > +limit,
             total,
