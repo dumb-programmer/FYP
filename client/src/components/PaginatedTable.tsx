@@ -34,7 +34,7 @@ export default function PaginatedTable({ colDefs, data, limit, hasNextPage, isFe
 
 
 
-    return <div className="ag-theme-quartz relative h-full">
+    return <div className="ag-theme-quartz relative h-full" data-testid="data-table">
         <div className="h-full pb-9">
             <AgGridReact
                 rowData={data?.pages[page]?.rows}
@@ -43,8 +43,8 @@ export default function PaginatedTable({ colDefs, data, limit, hasNextPage, isFe
         </div>
         <div className="absolute bottom-0 h-10 w-full flex items-center justify-end gap-4 bg-white border border-gray-300 pr-5">
             <p>{start}-{end} of {total}</p>
-            <button className="btn btn-sm btn-ghost" onClick={onPrevious} disabled={page === 0}><ChevronLeftIcon height={20} width={20} /></button>
-            <button className="btn btn-sm btn-ghost" onClick={onNext} disabled={data && !hasNextPage && page === data.pages.length - 1}><ChevronRightIcon height={20} width={20} /></button>
+            <button aria-label="previous page" className="btn btn-sm btn-ghost" onClick={onPrevious} disabled={page === 0}><ChevronLeftIcon height={20} width={20} /></button>
+            <button aria-label="next page" className="btn btn-sm btn-ghost" onClick={onNext} disabled={data && !hasNextPage && page === data.pages.length - 1}><ChevronRightIcon height={20} width={20} /></button>
         </div>
     </div>
 }
