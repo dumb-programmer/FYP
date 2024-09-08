@@ -32,7 +32,11 @@ export const blockUser = [
     asyncHandler(async (req, res) => {
         const { userId } = req.params;
 
-        await User.updateOne({ _id: userId }, { $set: { isBlocked: true } });
+        const user = await User.updateOne({ _id: userId, isAdmin: { $ne: true } }, { $set: { isBlocked: true } });
+
+        if (user.matchedCount === 0) {
+            return res.status(404).json({ message: "No user with this id exists" })
+        }
 
         return res.status(200).json({ message: "User blocked" });
     })
@@ -43,7 +47,11 @@ export const unblockUser = [
     asyncHandler(async (req, res) => {
         const { userId } = req.params;
 
-        await User.updateOne({ _id: userId }, { $unset: { isBlocked: true } });
+        const user = await User.updateOne({ _id: userId, isAdmin: { $ne: true } }, { $unset: { isBlocked: true } });
+
+        if (user.matchedCount === 0) {
+            return res.status(404).json({ message: "No user with this id exists" })
+        }
 
         return res.status(200).json({ message: "User unblocked" });
     })
@@ -53,15 +61,12 @@ export const deleteUser = [
     validateParams(UserIdSchema),
     asyncHandler(async (req, res) => {
         const { userId } = req.params;
+        
+        const user = await User.deleteOne({ _id: userId, isAdmin: { $ne: true } });
 
-        const user = await User.findById(userId);
-
-        // Cannot delete admin
-        if (user?.isAdmin) {
-            return res.status(403).json({ message: "Cannot delete admin" })
-        };
-
-        await User.deleteOne({ _id: userId });
+        if (user.deletedCount === 0) {
+            return res.status(404).json({ message: "No user with this id exists" });
+        }
 
         const chats = await Chat.find({ userId });
 

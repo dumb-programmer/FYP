@@ -18,7 +18,7 @@ beforeAll(async () => {
             const salt = bcrypt.genSaltSync();
             const hashedPassword = bcrypt.hashSync("12345678", salt);
             // create admin user
-            await User.create({ firstName: "test", lastName: "test", email: "admin@gmail.com", password: hashedPassword, role: "admin" });
+            await User.create({ firstName: "test", lastName: "test", email: "admin@gmail.com", password: hashedPassword, isAdmin: true, });
 
             const user = await User.create({ firstName: "John", lastName: "Cena", email: "john@gmail.com", password: hashedPassword });
             const chat = await Chat.create({ name: "chat", index: collectionId, userId: user._id });

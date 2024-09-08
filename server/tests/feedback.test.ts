@@ -120,7 +120,7 @@ describe("/feedback", () => {
         const response = await request(app).get(`/feedback`).set("Cookie", cookie);
 
         expect(response.status).toEqual(200);
-        expect(response.body.feedbacks).toHaveLength(1);
+        expect(response.body.rows).toHaveLength(1);
         expect(response.body.nextPage).toEqual(2);
         expect(response.body.hasMore).toEqual(false);
         expect(response.body.total).toEqual(1);

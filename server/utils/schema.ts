@@ -81,5 +81,5 @@ export const FeedbackSchema = z.object({
 });
 
 export const UserIdSchema = z.object({
-  userId: z.string().refine(val => isValidObjectId(val))
+  userId: z.string().refine(val => isValidObjectId(val), { message: "Invalid ObjectId" })
 })
