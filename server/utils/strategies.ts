@@ -25,6 +25,7 @@ const googleStrategy = new GoogleStrategy.Strategy(
           email: profile.email,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
+          profilePicture: profile.picture
         }).then((createdUser) => done(null, createdUser));
         return;
       }
@@ -56,6 +57,7 @@ const githubStrategy = new GitHubStrategy.Strategy(
           username: profile.username,
           firstName,
           lastName,
+          profilePicture: profile.photos[0].value
         }).then((createdUser) => done(null, createdUser));
         return;
       }

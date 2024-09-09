@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   password: { type: String },
   firstName: { type: String },
   lastName: { type: String },
+  profilePicture: { type: String },
   isAdmin: { type: Boolean },
   isBlocked: { type: Boolean }
 });
