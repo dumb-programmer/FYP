@@ -5,4 +5,7 @@ export default {
     extend: {},
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    logs: false, // This will disable the logs in the console
+  },
 };

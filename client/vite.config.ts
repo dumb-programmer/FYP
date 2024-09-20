@@ -19,8 +19,8 @@ export default defineConfig({
   },
   server: {
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, '/home/asadk/localhost-key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname, '/home/asadk/localhost.pem')),
+      key: fs.readFileSync(path.resolve(__dirname, '/home/asadkhan/localhost-key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, '/home/asadkhan/localhost.pem')),
     },
     // Make sure the server is accessible over the local network
     host: '0.0.0.0',
