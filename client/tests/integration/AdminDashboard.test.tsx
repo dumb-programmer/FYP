@@ -28,8 +28,8 @@ describe("AdminDashboard", () => {
     it("renders correctly", async () => {
         const { container } = renderComponent();
 
+        expect(container).toMatchSnapshot();
         await waitFor(() => {
-            expect(container).toMatchSnapshot();
             expect(getFeedbackList).toHaveBeenCalled();
 
             expect(screen.getByText("Hello")).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { expect, describe, it, vi, beforeEach, beforeAll } from "vitest";
 import AdminUsers from "../../src/views/AdminUsers";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -67,10 +67,9 @@ describe("AdminUsers", () => {
     it("renders correctly", async () => {
         const { container } = renderComponent();
 
+        expect(container).toMatchSnapshot();
+        expect(getUsersList).toHaveBeenCalled();
         await waitFor(() => {
-            expect(container).toMatchSnapshot();
-            expect(getUsersList).toHaveBeenCalled();
-
             expect(screen.getByText("John")).toBeInTheDocument();
             expect(screen.getByText("Cena")).toBeInTheDocument();
             expect(screen.getByText("john@gmail.com")).toBeInTheDocument();
